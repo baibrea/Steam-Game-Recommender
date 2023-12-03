@@ -26,5 +26,6 @@ public:
     int getPeakCCU();
     string getTitle();
     float getRatingValue();
+    float getPrice();
 };
 

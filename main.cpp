@@ -26,16 +26,16 @@ int main() {
         arr.push_back(game.second);
     }
 
-//     Running QuickSort
-//    quickSort(arr, 0, arr.size()-1, "peakCCU");
+////     Running QuickSort
+//    quickSort(arr, 0, arr.size()-1, "rating");
 //    for(int i = 0; i < arr.size(); i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
+//        cout << "Game: " << arr.at(i).getTitle() << " Rating: " << arr.at(i).getRatingValue() << endl;
 //    }
 
-//  Running MergeSort
+////  Running MergeSort
 //    mergeSort(arr, 0, arr.size()-1, "rating");
 //    for(int i = 0; i < arr.size()-1; i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << "Rating: " << arr.at(i).getRatingValue() << endl;
+//        cout << "Game: " << arr.at(i).getTitle() << " Rating: " << arr.at(i).getRatingValue() << endl;
 //    }
 
 

@@ -92,40 +92,49 @@ void parseFile(fstream& file, map<string, Game>& steamGames) {
 }
 
 void quickSort(vector<Game>& arr, int low, int high, string filter) {
-    if(low < high) {
+    stack<int> stack;
+    stack.push(low);
+    stack.push(high);
+    while(!stack.empty()) {
+        high = stack.top();
+        stack.pop();
+        low = stack.top();
+        stack.pop();
+
         int pivotPosition = partition(arr, low, high, filter);
-        quickSort(arr, low, pivotPosition - 1, filter);
-        quickSort(arr, pivotPosition + 1, high, filter);
+
+        if(pivotPosition - 1 > low) {
+            stack.push(low);
+            stack.push(pivotPosition - 1);
+        }
+
+        if(pivotPosition + 1 < high) {
+            stack.push(pivotPosition + 1);
+            stack.push(high);
+        }
     }
 }
 
 int partition(vector<Game>& arr, int low, int high, string filter) {
-    int pivotValue;
-    if(filter == "peakCCU") {
-        int firstValue = (low + rand() % (high - low));
-        int secondValue = (low + rand() % (high - low));
-        int thirdValue = (low + rand() % (high - low));
-        if(thirdValue < firstValue < secondValue || secondValue < firstValue < thirdValue) {
-            pivotValue = arr[firstValue].getPeakCCU();
-        }
-        else if (thirdValue < secondValue < firstValue || firstValue < secondValue << thirdValue) {
-            pivotValue = arr[secondValue].getPeakCCU();
-        }
-        else {
-            pivotValue = arr[thirdValue].getPeakCCU();
-        }
-    }
+    double pivotValue;
+    if(filter == "price")
+        pivotValue = arr[low].getPrice();
+    else if(filter == "rating")
+        pivotValue = arr[low].getRatingValue();
+    else if(filter == "peakCCU")
+        pivotValue = arr[low].getPeakCCU();
     int up = low, down = high;
 
     while(up < down) {
         for(int j = up; j < high; j++) {
-            if(arr[up].getPeakCCU() > pivotValue) {
+
+            if(quickUpHelper(arr[up], pivotValue, filter)) {
                 break;
             }
             up++;
         }
         for(int j = high; j > low; j--) {
-            if(arr[down].getPeakCCU() < pivotValue) {
+            if(quickDownHelper(arr[down], pivotValue, filter)) {
                 break;
             }
             down--;
@@ -137,7 +146,30 @@ int partition(vector<Game>& arr, int low, int high, string filter) {
     swap(arr[low], arr[down]);
     cout << "Still running: " << endl;
     return down;
+}
 
+bool quickUpHelper(Game up, double pivotValue, string filter) {
+    if(filter == "price") {
+        return up.getPrice() > (int)pivotValue;
+    }
+    else if(filter == "rating") {
+        return up.getRatingValue() > pivotValue;
+    }
+    else if(filter == "peakCCU") {
+        return up.getPeakCCU() > (int)pivotValue;
+    }
+}
+
+bool quickDownHelper(Game down, double pivotValue, string filter) {
+    if(filter == "price") {
+        return down.getPrice() < (int)pivotValue;
+    }
+    else if(filter == "rating") {
+        return down.getRatingValue() < pivotValue;
+    }
+    else if(filter == "peakCCU") {
+        return down.getPeakCCU() < (int)pivotValue;
+    }
 }
 
 void mergeSort(vector<Game>& arr, int left, int right, string filter) {
@@ -165,7 +197,7 @@ void merge(vector<Game>& arr, int left, int mid, int right, string filter) {
     int mergedIndex = left;
 
     while(leftIndex < leftSize && rightIndex < rightSize) {
-         if(leftSection[leftIndex].getRatingValue() <= rightSection[rightIndex].getRatingValue()) {
+         if(mergeHelper(leftSection[leftIndex], rightSection[rightIndex], filter)) {
              arr[mergedIndex] = leftSection[leftIndex];
              leftIndex++;
          }
@@ -188,4 +220,16 @@ void merge(vector<Game>& arr, int left, int mid, int right, string filter) {
         mergedIndex++;
     }
     cout << "Still running..." << endl;
+}
+
+bool mergeHelper(Game leftGame, Game rightGame, string filter) {
+    if(filter == "price") {
+        return leftGame.getPrice() <= rightGame.getPrice();
+    }
+    else if(filter == "rating") {
+        return leftGame.getRatingValue() <= rightGame.getRatingValue();
+    }
+    else if(filter == "peakCCU") {
+        return leftGame.getPeakCCU() <= rightGame.getPeakCCU();
+    }
 }

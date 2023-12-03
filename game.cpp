@@ -42,3 +42,7 @@ string Game::getTitle() {
 float Game::getRatingValue() {
     return rating;
 }
+
+float Game::getPrice() {
+    return price;
+}
