@@ -86,33 +86,41 @@ int main() {
 
         // Handles User Interaction with Window
         char input;
+        Vector2i mousePosition;
+        bool typing = false;
+
         while (window.pollEvent(event)) {
             switch (event.type) {
                 // If user closes window, close
                 case Event::Closed:
                     window.close();
                     break;
+
                 // If user enters text, append characters to search box text
                 case Event::TextEntered:
-                    input = static_cast<char>(event.text.unicode);
-                    if (31 < event.text.unicode && event.text.unicode < 128) {
-                        textEntered = true;
-                        searchString.pop_back();
-                        searchString.push_back(input);
-                        searchString.push_back('|');
-                        cout << searchString << endl;
+                    if (typing == true) {
+                        input = static_cast<char>(event.text.unicode);
+                        if (31 < event.text.unicode && event.text.unicode < 128) {
+                            textEntered = true;
+                            searchString.pop_back();
+                            searchString.push_back(input);
+                            searchString.push_back('|');
+                            cout << searchString << endl;
+                        }
                     }
                     break;
                 case Event::KeyPressed:
                     // If user presses backspace, delete the last character in the search bar
-                    if (event.key.code == sf::Keyboard::Backspace and searchString.size() > 1) {
-                        searchString.pop_back();
-                        searchString.pop_back();
-                        searchString.push_back('|');
-                        cout << searchString << endl;
-                    }
-                    if (searchString.size() == 1) {
-                        textEntered = false;
+                    if (typing == true) {
+                        if (event.key.code == sf::Keyboard::Backspace and searchString.size() > 1) {
+                            searchString.pop_back();
+                            searchString.pop_back();
+                            searchString.push_back('|');
+                            cout << searchString << endl;
+                        }
+                        if (searchString.size() == 1) {
+                            textEntered = false;
+                        }
                     }
                     // TODO: If user presses enter, search for current string in game titles (ignore case sensitivity)
                     break;
@@ -122,8 +130,14 @@ int main() {
                     int x = mousePosition.x;
                     int y = mousePosition.y;
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        // TODO: Implement mouse clicks
+                        //
                         leftMouseClick(x, y, buttons);
+
+                        if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
+                            typing = true;
+                        else
+                            typing = false;
+
                     }
                     break;
             }
