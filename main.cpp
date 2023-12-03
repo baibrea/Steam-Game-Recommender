@@ -133,8 +133,12 @@ int main() {
                         //
                         leftMouseClick(x, y, buttons);
 
-                        if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
+                        if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             typing = true;
+                            if (searchString == "|")
+                                textEntered = true;
+                        }
+
                         else
                             typing = false;
                     }
