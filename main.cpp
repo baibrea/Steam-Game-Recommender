@@ -13,7 +13,6 @@ using namespace sf;
 int main() {
     // Create containers (Game objects, buttons)
     map<string, Game> steamGames;
-    vector<Button> buttons{};
 
     // Parse database and create new Game objects
     fstream file("games.csv", ios_base::in);
@@ -23,65 +22,67 @@ int main() {
     // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
 
-    // Sets the font to Arial.
+    // Sets the font to Arial
     Font font;
     font.loadFromFile("../files/Arial.ttf");
     bool textEntered = false;
     string searchString = "|";
 
     Event event;
+
+    // Sets up side bar
+    sf::RectangleShape sideBar(sf::Vector2f(200, 600));
+    sideBar.setFillColor(sf::Color(52, 109, 157));
+    sideBar.setOutlineThickness(4);
+    sideBar.setOutlineColor(sf::Color::White);
+
+    // Text for "Steam Game Recommender"
+    // FIXME: I don't know if this looks good or not so this can be removed later
+    sf::Text titleText1 = createText("STEAM GAME", 22, sf::Color::White);
+    sf::Text titleText2 = createText("RECOMMENDER", 22, sf::Color::White);
+    titleText1.setStyle(sf::Text::Bold);
+    titleText2.setStyle(sf::Text::Bold);
+    titleText1.setFont(font);
+    titleText2.setFont(font);
+    setTextCenter(titleText1, 100, 50);
+    setTextCenter(titleText2, 100, 80);
+
+    // Text for Price
+    sf::Text priceText = createText("Price", 22, sf::Color::White);
+    priceText.setStyle(sf::Text::Bold);
+    priceText.setFont(font);
+    setTextCenter(priceText, 100, 25);
+
+    // Textbox for game search
+    sf::RectangleShape searchBox(sf::Vector2f(750, 40));
+    searchBox.setFillColor(sf::Color(37, 78, 110));
+    sf::FloatRect rectBounds = searchBox.getLocalBounds();
+    searchBox.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
+    searchBox.setPosition(600, 40);
+    searchBox.setOutlineThickness(4);
+    searchBox.setOutlineColor(sf::Color::White);
+
+    // Default "search" text in search box
+    sf::Text searchText = createText("search", 24, sf::Color(192, 192, 192));
+    searchText.setFont(font);
+    searchText.setPosition(240, 25);
+
+    // Box to display game titles/game information
+    sf::RectangleShape gameBox(sf::Vector2f(750, 490));
+    gameBox.setFillColor(sf::Color(37, 78, 110));
+    sf::FloatRect bounds = gameBox.getLocalBounds();
+    gameBox.setOrigin(bounds.left + bounds.width/2.0f, bounds.top + bounds.height/2.0f);
+    gameBox.setPosition(600, 330);
+    gameBox.setOutlineThickness(4);
+    gameBox.setOutlineColor(sf::Color::White);
+
+    // Create buttons
+    vector<Button> buttons{};
+    Button priceButton("price", 25, 150);
+    buttons.push_back(priceButton);
+
     // Code for Main Window
     while (window.isOpen()) {
-
-        // Sets up side bar
-        sf::RectangleShape sideBar(sf::Vector2f(200, 600));
-        sideBar.setFillColor(sf::Color(52, 109, 157));
-        sideBar.setOutlineThickness(4);
-        sideBar.setOutlineColor(sf::Color::White);
-
-        // Text for "Steam Game Recommender"
-        // FIXME: I don't know if this looks good or not so this can be removed later
-        sf::Text titleText1 = createText("STEAM GAME", 22, sf::Color::White);
-        sf::Text titleText2 = createText("RECOMMENDER", 22, sf::Color::White);
-        titleText1.setStyle(sf::Text::Bold);
-        titleText2.setStyle(sf::Text::Bold);
-        titleText1.setFont(font);
-        titleText2.setFont(font);
-        setTextCenter(titleText1, 100, 50);
-        setTextCenter(titleText2, 100, 80);
-
-        // Text for Price
-        sf::Text priceText = createText("Price", 22, sf::Color::White);
-        priceText.setStyle(sf::Text::Bold);
-        priceText.setFont(font);
-        setTextCenter(priceText, 100, 25);
-
-        // Textbox for game search
-        sf::RectangleShape searchBox(sf::Vector2f(750, 40));
-        searchBox.setFillColor(sf::Color(37, 78, 110));
-        sf::FloatRect rectBounds = searchBox.getLocalBounds();
-        searchBox.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
-        searchBox.setPosition(600, 40);
-        searchBox.setOutlineThickness(4);
-        searchBox.setOutlineColor(sf::Color::White);
-
-        // Default "search" text in search box
-        sf::Text searchText = createText("search", 24, sf::Color(192, 192, 192));
-        searchText.setFont(font);
-        searchText.setPosition(240, 25);
-
-        // Box to display game titles/game information
-        sf::RectangleShape gameBox(sf::Vector2f(750, 490));
-        gameBox.setFillColor(sf::Color(37, 78, 110));
-        sf::FloatRect bounds = gameBox.getLocalBounds();
-        gameBox.setOrigin(bounds.left + bounds.width/2.0f, bounds.top + bounds.height/2.0f);
-        gameBox.setPosition(600, 330);
-        gameBox.setOutlineThickness(4);
-        gameBox.setOutlineColor(sf::Color::White);
-
-        // Create buttons
-        Button priceButton("price", 25, 150);
-        buttons.push_back(priceButton);
 
         // Handles User Interaction with Window
         char input;
