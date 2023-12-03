@@ -6,7 +6,7 @@ class Game {
 private:
     string title;
     string releaseDate;
-    int price;
+    float price;
     int peakCCU;
     string desc;
     bool windows;
