@@ -2,7 +2,7 @@
 
 Button::Button(string name, int x, int y) {
     this->name = name;
-    if (name == "price") {
+    if (name == "price" or name == "quickSort") {
         active = true;
     }
     else {
@@ -43,4 +43,8 @@ void Button::drawButton(sf::RenderWindow& window) {
 sf::FloatRect Button::getBounds() {
     sf::FloatRect bounds = outerCircle.getGlobalBounds();
     return bounds;
+}
+
+bool Button::isActive() {
+    return active;
 }

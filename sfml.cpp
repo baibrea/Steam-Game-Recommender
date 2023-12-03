@@ -20,6 +20,11 @@ void leftMouseClick(int x, int y, vector<Button>& buttons) {
         for (int i = 0; i < buttons.size(); i++) {
             sf::FloatRect bounds = buttons.at(i).getBounds();
             if (bounds.contains(x, y)) {
+                for (int j = 0; j < buttons.size(); j++) {
+                    if (buttons.at(j).isActive()) {
+                        buttons.at(j).toggle();
+                    }
+                }
                 buttons.at(i).toggle();
                 break;
             }

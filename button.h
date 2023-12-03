@@ -15,4 +15,5 @@ public:
     void toggle();
     void drawButton(sf::RenderWindow& window);
     sf::FloatRect getBounds();
+    bool isActive();
 };
