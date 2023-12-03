@@ -65,10 +65,17 @@ int main() {
     // FIXME: I don't know if this looks good or not so this can be removed later
     sf::Text titleText1 = createText("STEAM GAME", 22, sf::Color::White);
     sf::Text titleText2 = createText("RECOMMENDER", 22, sf::Color::White);
+
+    titleText1.setOutlineThickness(3);
+    titleText2.setOutlineThickness(3);
+    titleText1.setOutlineColor(Color(24, 68, 84));
+    titleText2.setOutlineColor(Color(24, 68, 84));
+
     titleText1.setStyle(sf::Text::Bold);
     titleText2.setStyle(sf::Text::Bold);
     titleText1.setFont(font);
     titleText2.setFont(font);
+
     setTextCenter(titleText1, 100, 50);
     setTextCenter(titleText2, 100, 80);
     texts.push_back(titleText1);
@@ -78,37 +85,51 @@ int main() {
     sf::Text filterText = createText("Sort by:", 22, sf::Color::White);
     filterText.setFont(font);
     filterText.setStyle(sf::Text::Bold);
+    filterText.setOutlineThickness(2);
+    filterText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(filterText, 100, 150);
     texts.push_back(filterText);
 
     sf::Text priceText = createText("Price", 22, sf::Color::White);
     priceText.setFont(font);
+    priceText.setOutlineThickness(2);
+    priceText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(priceText, 96, 190);
     texts.push_back(priceText);
 
     sf::Text ratingText = createText("Rating", 22, sf::Color::White);
     ratingText.setFont(font);
+    ratingText.setOutlineThickness(2);
+    ratingText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(ratingText, 104, 230);
     texts.push_back(ratingText);
 
     sf::Text popularityText = createText("Popularity", 22, sf::Color::White);
     popularityText.setFont(font);
+    popularityText.setOutlineThickness(2);
+    popularityText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(popularityText, 120, 270);
     texts.push_back(popularityText);
 
     sf::Text usingText = createText("Using:", 22, sf::Color::White);
     usingText.setFont(font);
     usingText.setStyle(sf::Text::Bold);
+    usingText.setOutlineThickness(2);
+    usingText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(usingText, 100, 320);
     texts.push_back(usingText);
 
     sf::Text quickSortText = createText("Quick Sort", 22, sf::Color::White);
     quickSortText.setFont(font);
+    quickSortText.setOutlineThickness(2);
+    quickSortText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(quickSortText, 120, 360);
     texts.push_back(quickSortText);
 
     sf::Text mergeSortText = createText("Merge Sort", 22, sf::Color::White);
     mergeSortText.setFont(font);
+    mergeSortText.setOutlineThickness(2);
+    mergeSortText.setOutlineColor(Color(24, 68, 84));
     setTextCenter(mergeSortText, 125, 400);
     texts.push_back(mergeSortText);
 
