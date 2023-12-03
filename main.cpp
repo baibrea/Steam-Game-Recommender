@@ -193,6 +193,8 @@ int main() {
                         }
                     }
                     // TODO: If user presses enter, search for current string in game titles (ignore case sensitivity)
+
+                    // Placeholder
                     break;
                 case Event::MouseButtonPressed:
                     sf::Mouse mouse;
