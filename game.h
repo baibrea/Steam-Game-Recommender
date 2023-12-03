@@ -13,12 +13,14 @@ private:
     bool mac;
     bool linux;
     int metacritic;
-    int positive;
-    int negative;
+    int rating;
     int averagePlaytime;
     vector<string> genres;
 public:
-    Game(string title);
-    void editGenres(string genre);
+    Game(string title, string releaseDate, float price, int peakCCU, int averagePlaytime);
+    void addDesc(string description);
+    void compatibleOS(bool windows, bool mac, bool linux);
+    void getRating(int metacriticRating, int positive, int negative);
+    void editGenres(vector<string> genres);
 };
 

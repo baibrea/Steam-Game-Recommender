@@ -1,7 +1,7 @@
 #include "extra.h"
 #include <limits>
 
-void parseFile(fstream& file) {
+void parseFile(fstream& file, map<string, Game> steamGames) {
     // Bypass line that contains column titles
     string line;
     getline(file, line);
@@ -50,7 +50,35 @@ void parseFile(fstream& file) {
             negative = stoi(temp);
             getline(stream, temp, ',');
             averagePlaytime = stoi(temp);
-            //FIXME: This is for testing--delete when done
+
+            // Create vector of the game's genres
+            string genres;
+            vector<string> genreList;
+            getline(stream, genres);
+            cout << genres << endl;
+
+            // Delete quotation marks at beginning and end of string
+            genres.erase(0, 1);
+            genres.erase(genres.size() - 1, 1);
+            while (genres.find(',') != string::npos) {
+                int commaIndex = genres.find(',');
+                string newGenre = genres.substr(0, commaIndex);
+                genres.erase(0, newGenre.length() + 1);
+                genreList.push_back(newGenre);
+            }
+            genreList.push_back(genres);
+
+            // Create a new Game object with the given stats
+            Game newGame(title, releaseDate, price, peakCCU, averagePlaytime);
+            newGame.addDesc(desc);
+            newGame.compatibleOS(windows, mac, linux);
+            newGame.getRating(metacritic, positive, negative);
+            newGame.editGenres(genreList);
+
+            // Add the new game to the container of Steam games
+            steamGames.at(title) = newGame;
+
+            //FIXME: This is for testing; delete when done
             count++;
             cout << title << " " << count << endl;
         }
