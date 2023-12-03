@@ -30,10 +30,18 @@ int main() {
     // Code for Main Window
     while (window.isOpen()) {
         text.setFont(font);
+
+        // Colors background
         window.clear(Color(26, 42, 61, 0));
 
+        // Sets up side bar
+        sf::RectangleShape sideBar(sf::Vector2f(100, 600));
+        sideBar.setFillColor(sf::Color(52, 109, 157));
+        window.draw(sideBar);
+
+
         // Text for Price
-        text.setFillColor(Color(255, 255, 255, 255));
+        text.setFillColor(Color(255, 255, 255));
         text.setString("Price");
         text.setCharacterSize(16);
         text.setStyle(Text::Bold);
