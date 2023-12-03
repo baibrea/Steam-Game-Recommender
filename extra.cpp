@@ -89,5 +89,4 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
             continue;
         }
     }
-
 }

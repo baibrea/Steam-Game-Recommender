@@ -4,6 +4,7 @@
 #include <map>
 #include "extra.h"
 #include "game.h"
+#include "sfml.h"
 #include <SFML/Graphics.hpp>
 using namespace std;
 using namespace sf;
@@ -35,18 +36,16 @@ int main() {
         window.clear(Color(26, 42, 61, 0));
 
         // Sets up side bar
-        sf::RectangleShape sideBar(sf::Vector2f(100, 600));
+        sf::RectangleShape sideBar(sf::Vector2f(200, 600));
         sideBar.setFillColor(sf::Color(52, 109, 157));
         window.draw(sideBar);
 
 
         // Text for Price
-        text.setFillColor(Color(255, 255, 255));
-        text.setString("Price");
-        text.setCharacterSize(16);
-        text.setStyle(Text::Bold);
-        text.setPosition(0, 0);
-        window.draw(text);
+        sf::Text priceText = createText("Price", 22, sf::Color::White, sf::Text::Bold);
+        priceText.setFont(font);
+        setTextCenter(priceText, 100, 25);
+        window.draw(priceText);
 
         // Handles User Interaction with Window
         while (window.pollEvent(event)) {
@@ -56,7 +55,6 @@ int main() {
                     break;
             }
         }
-
 
         window.display();
     }
