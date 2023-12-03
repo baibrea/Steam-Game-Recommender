@@ -100,19 +100,19 @@ void quickSort(vector<Game> arr, int low, int high, string filter) {
 }
 
 int partition(vector<Game> arr, int low, int high, string filter) {
-    int pivotValue = 0;
+    int pivotValue;
     if(filter == "peakCCU") {
         int firstValue = (low + rand() % (high - low));
         int secondValue = (low + rand() % (high - low));
         int thirdValue = (low + rand() % (high - low));
         if(thirdValue < firstValue < secondValue || secondValue < firstValue < thirdValue) {
-            arr[firstValue].getPeakCCU();
+            pivotValue = arr[firstValue].getPeakCCU();
         }
         else if (thirdValue < secondValue < firstValue || firstValue < secondValue << thirdValue) {
-            arr[secondValue].getPeakCCU();
+            pivotValue = arr[secondValue].getPeakCCU();
         }
         else {
-            arr[thirdValue].getPeakCCU();
+            pivotValue = arr[thirdValue].getPeakCCU();
         }
     }
     int up = low, down = high;
