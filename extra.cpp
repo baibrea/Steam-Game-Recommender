@@ -91,7 +91,7 @@ void parseFile(fstream& file, map<string, Game>& steamGames) {
     }
 }
 
-void quickSort(vector<Game> arr, int low, int high, string filter) {
+void quickSort(vector<Game>& arr, int low, int high, string filter) {
     if(low < high) {
         int pivotPosition = partition(arr, low, high, filter);
         quickSort(arr, low, pivotPosition - 1, filter);
@@ -99,7 +99,7 @@ void quickSort(vector<Game> arr, int low, int high, string filter) {
     }
 }
 
-int partition(vector<Game> arr, int low, int high, string filter) {
+int partition(vector<Game>& arr, int low, int high, string filter) {
     int pivotValue;
     if(filter == "peakCCU") {
         int firstValue = (low + rand() % (high - low));
@@ -138,4 +138,54 @@ int partition(vector<Game> arr, int low, int high, string filter) {
     cout << "Still running: " << endl;
     return down;
 
+}
+
+void mergeSort(vector<Game>& arr, int left, int right, string filter) {
+    if(left < right) {
+        int mid = (left + right) / 2;
+        mergeSort(arr, left, mid, filter);
+        mergeSort(arr, mid + 1, right, filter);
+        merge(arr, left, mid, right, filter);
+    }
+}
+
+void merge(vector<Game>& arr, int left, int mid, int right, string filter) {
+    int leftSize = mid - left + 1;
+    int rightSize = right - mid;
+    vector<Game> leftSection, rightSection;
+
+    for(int i = 0; i < leftSize; i++) {
+        leftSection.push_back(arr[left+i]);
+    }
+    for(int j = 0; j < rightSize; j++) {
+        rightSection.push_back(arr[mid+1+j]);
+    }
+
+    int leftIndex = 0, rightIndex = 0;
+    int mergedIndex = left;
+
+    while(leftIndex < leftSize && rightIndex < rightSize) {
+         if(leftSection[leftIndex].getRatingValue() <= rightSection[rightIndex].getRatingValue()) {
+             arr[mergedIndex] = leftSection[leftIndex];
+             leftIndex++;
+         }
+         else {
+             arr[mergedIndex] = rightSection[rightIndex];
+             rightIndex++;
+         }
+         mergedIndex++;
+    }
+
+    while(leftIndex < leftSize) {
+        arr[mergedIndex] = leftSection[leftIndex];
+        leftIndex++;
+        mergedIndex++;
+    }
+
+    while(rightIndex < rightSize) {
+        arr[mergedIndex] = rightSection[rightIndex];
+        rightIndex++;
+        mergedIndex++;
+    }
+    cout << "Still running..." << endl;
 }

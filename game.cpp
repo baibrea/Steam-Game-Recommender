@@ -38,3 +38,7 @@ int Game::getPeakCCU() {
 string Game::getTitle() {
     return title;
 }
+
+float Game::getRatingValue() {
+    return rating;
+}

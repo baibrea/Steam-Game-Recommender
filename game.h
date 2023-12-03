@@ -25,5 +25,6 @@ public:
     void editGenres(vector<string> genres);
     int getPeakCCU();
     string getTitle();
+    float getRatingValue();
 };
 

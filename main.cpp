@@ -31,6 +31,13 @@ int main() {
 //        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
 //    }
 
+//  Running MergeSort
+//    mergeSort(arr, 0, arr.size()-1, "rating");
+//    for(int i = 0; i < arr.size()-1; i++) {
+//        cout << "Game: " << arr.at(i).getTitle() << "Rating: " << arr.at(i).getRatingValue() << endl;
+//    }
+
+
     // Code for UI
     // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
