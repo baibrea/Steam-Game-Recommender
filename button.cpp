@@ -22,14 +22,11 @@ Button::Button(string name, int x, int y) {
 }
 
 void Button::toggle() {
-    cout << "toggled ";
     if (active) {
         active = false;
-        cout << "off" << endl;
     }
     else {
         active = true;
-        cout << "on" << endl;
     }
 }
 
