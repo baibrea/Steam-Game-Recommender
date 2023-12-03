@@ -2,10 +2,15 @@
 
 Button::Button(string name, int x, int y) {
     this->name = name;
-    active = false;
+    if (name == "price") {
+        active = true;
+    }
+    else {
+        active = false;
+    }
     outerCircle = sf::CircleShape(10.f);
     outerCircle.setFillColor(sf::Color::White);
-    innerCircle = sf::CircleShape(8.f);
+    innerCircle = sf::CircleShape(7.f);
     innerCircle.setFillColor(sf::Color::Red);
     position = sf::Vector2f(x, y);
     outerCircle.setOrigin(outerCircle.getRadius(), outerCircle.getRadius());

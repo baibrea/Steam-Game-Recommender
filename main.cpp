@@ -11,7 +11,7 @@ using namespace std;
 using namespace sf;
 
 int main() {
-    // Create containers (Game objects, buttons)
+    // Create containers (Game objects, filterButtons)
     map<string, Game> steamGames;
 
     // Parse database and create new Game objects
@@ -26,11 +26,10 @@ int main() {
         arr.push_back(game.second);
     }
 //     Running QuickSort
-    quickSort(arr, 0, arr.size()-1, "peakCCU");
-    for(int i = 0; i < arr.size(); i++) {
-        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
-    }
-
+//    quickSort(arr, 0, arr.size()-1, "peakCCU");
+//    for(int i = 0; i < arr.size(); i++) {
+//        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
+//    }
 
     // Code for UI
     // Create window
@@ -39,6 +38,10 @@ int main() {
     // Sets the font to Arial
     Font font;
     font.loadFromFile("../files/Arial.ttf");
+
+    // Vector to hold all sf::Text objects
+    vector<sf::Text> texts;
+
     bool textEntered = false;
     string searchString = "|";
 
@@ -60,12 +63,62 @@ int main() {
     titleText2.setFont(font);
     setTextCenter(titleText1, 100, 50);
     setTextCenter(titleText2, 100, 80);
+    texts.push_back(titleText1);
+    texts.push_back(titleText2);
 
-    // Text for Price
+    // Sidebar text
+    sf::Text filterText = createText("Sort by:", 22, sf::Color::White);
+    filterText.setFont(font);
+    filterText.setStyle(sf::Text::Bold);
+    setTextCenter(filterText, 100, 150);
+    texts.push_back(filterText);
+
     sf::Text priceText = createText("Price", 22, sf::Color::White);
-    priceText.setStyle(sf::Text::Bold);
     priceText.setFont(font);
-    setTextCenter(priceText, 100, 25);
+    setTextCenter(priceText, 96, 190);
+    texts.push_back(priceText);
+
+    sf::Text ratingText = createText("Rating", 22, sf::Color::White);
+    ratingText.setFont(font);
+    setTextCenter(ratingText, 104, 230);
+    texts.push_back(ratingText);
+
+    sf::Text popularityText = createText("Popularity", 22, sf::Color::White);
+    popularityText.setFont(font);
+    setTextCenter(popularityText, 120, 270);
+    texts.push_back(popularityText);
+
+    sf::Text usingText = createText("Using:", 22, sf::Color::White);
+    usingText.setFont(font);
+    usingText.setStyle(sf::Text::Bold);
+    setTextCenter(usingText, 100, 320);
+    texts.push_back(usingText);
+
+    sf::Text quickSortText = createText("Quick Sort", 22, sf::Color::White);
+    quickSortText.setFont(font);
+    setTextCenter(quickSortText, 120, 360);
+    texts.push_back(quickSortText);
+
+    sf::Text mergeSortText = createText("Merge Sort", 22, sf::Color::White);
+    mergeSortText.setFont(font);
+    setTextCenter(mergeSortText, 125, 400);
+    texts.push_back(mergeSortText);
+
+    // Create filterButtons
+    vector<Button> filterButtons{};
+    Button priceButton("price", 50, 190);
+    filterButtons.push_back(priceButton);
+    Button ratingButton("rating", 50, 230);
+    filterButtons.push_back(ratingButton);
+    Button peakCCUButton("peakCCU", 50, 270);
+    filterButtons.push_back(peakCCUButton);
+
+    vector<Button> algoButtons{};
+    Button quickSortButton("quickSort", 50, 360);
+    algoButtons.push_back(quickSortButton);
+    Button mergeSortButton("mergeSort", 50, 400);
+    algoButtons.push_back(mergeSortButton);
+
 
     // Textbox for game search
     sf::RectangleShape searchBox(sf::Vector2f(750, 40));
@@ -90,10 +143,6 @@ int main() {
     gameBox.setOutlineThickness(4);
     gameBox.setOutlineColor(sf::Color::White);
 
-    // Create buttons
-    vector<Button> buttons{};
-    Button priceButton("price", 25, 150);
-    buttons.push_back(priceButton);
     bool typing = false;
 
     // Code for Main Window
@@ -145,7 +194,8 @@ int main() {
                     int y = mousePosition.y;
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         //
-                        leftMouseClick(x, y, buttons);
+                        leftMouseClick(x, y, filterButtons);
+                        leftMouseClick(x, y, algoButtons);
 
                         if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             typing = true;
@@ -166,11 +216,17 @@ int main() {
             // Draw elements and display window
             window.clear(Color(26, 42, 61, 0));
             window.draw(sideBar);
-            window.draw(titleText1);
-            window.draw(titleText2);
 
-            for (int i = 0; i < buttons.size(); i++) {
-                buttons.at(i).drawButton(window);
+            for (int i = 0; i < filterButtons.size(); i++) {
+                filterButtons.at(i).drawButton(window);
+            }
+
+            for (int j = 0; j < texts.size(); j++) {
+                window.draw(texts.at(j));
+            }
+
+            for (int k = 0; k < algoButtons.size(); k++) {
+                algoButtons.at(k).drawButton(window);
             }
 
             window.draw(searchBox);
