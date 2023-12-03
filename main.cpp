@@ -24,8 +24,32 @@ int main() {
     Text text;
     Texture texture;
 
+    // Sets the font to Arial.
+    font.loadFromFile("../files/Arial.ttf");
+
+    // Code for Main Window
     while (window.isOpen()) {
+        text.setFont(font);
         window.clear(Color(26, 42, 61, 0));
+
+        // Text for Price
+        text.setFillColor(Color(255, 255, 255, 255));
+        text.setString("Price");
+        text.setCharacterSize(16);
+        text.setStyle(Text::Bold);
+        text.setPosition(0, 0);
+        window.draw(text);
+
+        // Handles User Interaction with Window
+        while (window.pollEvent(event)) {
+            switch (event.type) {
+                case Event::Closed:
+                    window.close();
+                    break;
+            }
+        }
+
+
         window.display();
     }
 
