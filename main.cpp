@@ -31,13 +31,6 @@ int main() {
 //        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
 //    }
 
-//  Running MergeSort
-//    mergeSort(arr, 0, arr.size()-1, "rating");
-//    for(int i = 0; i < arr.size()-1; i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << "Rating: " << arr.at(i).getRatingValue() << endl;
-//    }
-
-
     // Code for UI
     // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
@@ -126,11 +119,26 @@ int main() {
     Button mergeSortButton("mergeSort", 50, 400);
     algoButtons.push_back(mergeSortButton);
 
+    // Create "Sort" button
+    sf::RectangleShape sortButton(sf::Vector2f(80, 40));
+    sortButton.setFillColor(sf::Color(160, 160, 160));
+    sortButton.setOutlineThickness(4);
+    sortButton.setOutlineColor(sf::Color(64, 64, 64));
+    sf::FloatRect rectBounds = sortButton.getLocalBounds();
+    sortButton.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
+    sortButton.setPosition(100, 460);
+
+    sf::Text sortText = createText("SORT", 22, sf::Color::White);
+    sortText.setOutlineThickness(1.5);
+    sortText.setOutlineColor(sf::Color::Black);
+    sortText.setFont(font);
+    sortText.setStyle(sf::Text::Bold);
+    setTextCenter(sortText, 100, 460);
 
     // Textbox for game search
     sf::RectangleShape searchBox(sf::Vector2f(750, 40));
     searchBox.setFillColor(sf::Color(37, 78, 110));
-    sf::FloatRect rectBounds = searchBox.getLocalBounds();
+    rectBounds = searchBox.getLocalBounds();
     searchBox.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
     searchBox.setPosition(600, 40);
     searchBox.setOutlineThickness(4);
@@ -203,9 +211,18 @@ int main() {
                         //
                         leftMouseClick(x, y, filterButtons);
                         leftMouseClick(x, y, algoButtons);
-                        typing = clickedSearchBar(searchBox, mousePosition);
-                        if (typing == true && searchString == "|")
-                            textEntered = true;
+
+                        if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                            typing = true;
+                            if (searchString == "|")
+                                textEntered = true;
+                        }
+                        if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                            // TODO: Sort by selected filters
+                        }
+
+                        else
+                            typing = false;
                     }
                     break;
             }
@@ -229,7 +246,8 @@ int main() {
             for (int k = 0; k < algoButtons.size(); k++) {
                 algoButtons.at(k).drawButton(window);
             }
-
+            window.draw(sortButton);
+            window.draw(sortText);
             window.draw(searchBox);
             if (!textEntered) {
                 window.draw(searchText);
