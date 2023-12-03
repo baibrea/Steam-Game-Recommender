@@ -11,7 +11,7 @@ Button::Button(string name, int x, int y) {
     outerCircle = sf::CircleShape(10.f);
     outerCircle.setFillColor(sf::Color::White);
     innerCircle = sf::CircleShape(7.f);
-    innerCircle.setFillColor(sf::Color::Red);
+    innerCircle.setFillColor(sf::Color(97, 117, 136));
     position = sf::Vector2f(x, y);
     outerCircle.setOrigin(outerCircle.getRadius(), outerCircle.getRadius());
     innerCircle.setOrigin(innerCircle.getRadius(), innerCircle.getRadius());
