@@ -37,6 +37,8 @@ int main() {
         // Sets up side bar
         sf::RectangleShape sideBar(sf::Vector2f(200, 600));
         sideBar.setFillColor(sf::Color(52, 109, 157));
+        sideBar.setOutlineThickness(4);
+        sideBar.setOutlineColor(sf::Color::White);
 
         // Text for Price
         sf::Text priceText = createText("Price", 22, sf::Color::White);
@@ -46,7 +48,7 @@ int main() {
 
         // Textbox for game search
         sf::RectangleShape searchBox(sf::Vector2f(750, 40));
-        searchBox.setFillColor(sf::Color(52, 109, 157));
+        searchBox.setFillColor(sf::Color(37, 78, 110));
         sf::FloatRect rectBounds = searchBox.getLocalBounds();
         searchBox.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
         searchBox.setPosition(600, 40);
@@ -57,6 +59,15 @@ int main() {
         sf::Text searchText = createText("search", 24, sf::Color(192, 192, 192));
         searchText.setFont(font);
         searchText.setPosition(240, 25);
+
+        // Box to display game titles/game information
+        sf::RectangleShape gameBox(sf::Vector2f(750, 490));
+        gameBox.setFillColor(sf::Color(37, 78, 110));
+        sf::FloatRect bounds = gameBox.getLocalBounds();
+        gameBox.setOrigin(bounds.left + bounds.width/2.0f, bounds.top + bounds.height/2.0f);
+        gameBox.setPosition(600, 330);
+        gameBox.setOutlineThickness(4);
+        gameBox.setOutlineColor(sf::Color::White);
 
         // Handles User Interaction with Window
         char input;
@@ -70,7 +81,6 @@ int main() {
                 case Event::TextEntered:
                     input = static_cast<char>(event.text.unicode);
                     if (31 < event.text.unicode && event.text.unicode < 128) {
-                        cout << "input" << endl;
                         textEntered = true;
                         searchString.pop_back();
                         searchString.push_back(input);
@@ -81,11 +91,13 @@ int main() {
                 case Event::KeyPressed:
                     // If user presses backspace, delete the last character in the search bar
                     if (event.key.code == sf::Keyboard::Backspace and searchString.size() > 1) {
-                        cout << "backspace" << endl;
                         searchString.pop_back();
                         searchString.pop_back();
                         searchString.push_back('|');
                         cout << searchString << endl;
+                    }
+                    if (searchString.size() == 1) {
+                        textEntered = false;
                     }
                     break;
             }
@@ -104,6 +116,7 @@ int main() {
             else {
                 window.draw(searchInput);
             }
+            window.draw(gameBox);
             window.display();
         }
     }
