@@ -1,7 +1,7 @@
 #include "extra.h"
 #include <limits>
 
-void parseFile(fstream& file, map<string, Game> steamGames) {
+void parseFile(fstream& file, map<string, Game>& steamGames) {
     // Bypass line that contains column titles
     string line;
     getline(file, line);

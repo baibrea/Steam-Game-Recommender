@@ -5,40 +5,50 @@
 #include "extra.h"
 #include "game.h"
 #include "sfml.h"
+#include "button.h"
 #include <SFML/Graphics.hpp>
 using namespace std;
 using namespace sf;
 
 int main() {
-    //TODO: Create container for Game objects
+    // Create containers (Game objects, buttons)
     map<string, Game> steamGames;
+    vector<Button> buttons{};
+
     // Parse database and create new Game objects
     fstream file("games.csv", ios_base::in);
     //TODO: After container is created, pass container by reference into parseFile() so Game objects can be added to it
     parseFile(file, steamGames);
 
-    // Code for UI
+    // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
 
-    Font font;
-    Event event;
-    Text text;
-    Texture texture;
-
     // Sets the font to Arial.
+    Font font;
     font.loadFromFile("../files/Arial.ttf");
     bool textEntered = false;
     string searchString = "|";
 
+    Event event;
     // Code for Main Window
     while (window.isOpen()) {
-        text.setFont(font);
 
         // Sets up side bar
         sf::RectangleShape sideBar(sf::Vector2f(200, 600));
         sideBar.setFillColor(sf::Color(52, 109, 157));
         sideBar.setOutlineThickness(4);
         sideBar.setOutlineColor(sf::Color::White);
+
+        // Text for "Steam Game Recommender"
+        // FIXME: I don't know if this looks good or not so this can be removed later
+        sf::Text titleText1 = createText("STEAM GAME", 22, sf::Color::White);
+        sf::Text titleText2 = createText("RECOMMENDER", 22, sf::Color::White);
+        titleText1.setStyle(sf::Text::Bold);
+        titleText2.setStyle(sf::Text::Bold);
+        titleText1.setFont(font);
+        titleText2.setFont(font);
+        setTextCenter(titleText1, 100, 50);
+        setTextCenter(titleText2, 100, 80);
 
         // Text for Price
         sf::Text priceText = createText("Price", 22, sf::Color::White);
@@ -68,6 +78,10 @@ int main() {
         gameBox.setPosition(600, 330);
         gameBox.setOutlineThickness(4);
         gameBox.setOutlineColor(sf::Color::White);
+
+        // Create buttons
+        Button priceButton("price", 25, 150);
+        buttons.push_back(priceButton);
 
         // Handles User Interaction with Window
         char input;
@@ -99,6 +113,17 @@ int main() {
                     if (searchString.size() == 1) {
                         textEntered = false;
                     }
+                    // TODO: If user presses enter, search for current string in game titles (ignore case sensitivity)
+                    break;
+                case Event::MouseButtonPressed:
+                    sf::Mouse mouse;
+                    sf::Vector2i mousePosition = mouse.getPosition(window);
+                    int x = mousePosition.x;
+                    int y = mousePosition.y;
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        // TODO: Implement mouse clicks
+                        leftMouseClick(x, y, buttons);
+                    }
                     break;
             }
 
@@ -109,6 +134,13 @@ int main() {
             // Draw elements and display window
             window.clear(Color(26, 42, 61, 0));
             window.draw(sideBar);
+            window.draw(titleText1);
+            window.draw(titleText2);
+
+            for (int i = 0; i < buttons.size(); i++) {
+                buttons.at(i).drawButton(window);
+            }
+
             window.draw(searchBox);
             if (!textEntered) {
                 window.draw(searchText);

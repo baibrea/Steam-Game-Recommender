@@ -4,7 +4,7 @@ project(Steam_Game_Recommender)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Steam_Game_Recommender
-        main.cpp game.cpp game.h extra.cpp extra.h Graphics.h sfml.cpp sfml.h)
+        main.cpp game.cpp game.h extra.cpp extra.h Graphics.h sfml.cpp sfml.h button.cpp button.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

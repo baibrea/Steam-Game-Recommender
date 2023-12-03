@@ -7,7 +7,7 @@
 #pragma once
 using namespace std;
 
-void parseFile(fstream& file, map<string, Game> games);
+void parseFile(fstream& file, map<string, Game>& games);
 
 // TODO: Implement sorting algorithm methods
 
