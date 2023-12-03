@@ -21,7 +21,7 @@ public:
     Game(string title, string releaseDate, float price, int peakCCU, int averagePlaytime);
     void addDesc(string description);
     void compatibleOS(bool windows, bool mac, bool linux);
-    void getRating(int metacriticRating, float positive, float negative);
+    void setRating(int metacriticRating, float positive, float negative);
     void editGenres(vector<string> genres);
     int getPeakCCU();
     string getTitle();

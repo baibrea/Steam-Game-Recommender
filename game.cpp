@@ -17,7 +17,7 @@ void Game::compatibleOS(bool windows, bool mac, bool linux) {
     this->mac = mac;
     this->linux = linux;
 }
-void Game::getRating(int metacriticRating, float positive, float negative) {
+void Game::setRating(int metacriticRating, float positive, float negative) {
     this->metacritic = metacriticRating;
     float sumReviews = positive + negative;
     if (sumReviews != 0) {

@@ -6,6 +6,7 @@
 #include "game.h"
 #include "sfml.h"
 #include "button.h"
+#include <chrono>
 #include <SFML/Graphics.hpp>
 using namespace std;
 using namespace sf;

@@ -78,7 +78,7 @@ void parseFile(fstream& file, map<string, Game>& steamGames) {
             Game newGame(title, releaseDate, price, peakCCU, averagePlaytime);
             newGame.addDesc(desc);
             newGame.compatibleOS(windows, mac, linux);
-            newGame.getRating(metacritic, positive, negative);
+            newGame.setRating(metacritic, positive, negative);
             newGame.editGenres(genreList);
 
             // Add the new game to the container of Steam games

@@ -12,8 +12,7 @@ using namespace std;
 
 void parseFile(fstream& file, map<string, Game>& games);
 
-// TODO: Implement sorting algorithm methods
-
+// Sorting methods made with assistance from the "6 - Sorting" PowerPoint
 
 void quickSort(vector<Game>& arr, int low, int high, string filter);
 int partition(vector<Game>& arr, int low, int high, string filter);
