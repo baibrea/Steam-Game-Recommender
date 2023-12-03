@@ -80,6 +80,7 @@ int main() {
     vector<Button> buttons{};
     Button priceButton("price", 25, 150);
     buttons.push_back(priceButton);
+    bool typing = false;
 
     // Code for Main Window
     while (window.isOpen()) {
@@ -87,7 +88,6 @@ int main() {
         // Handles User Interaction with Window
         char input;
         Vector2i mousePosition;
-        bool typing = false;
 
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -137,7 +137,6 @@ int main() {
                             typing = true;
                         else
                             typing = false;
-
                     }
                     break;
             }
