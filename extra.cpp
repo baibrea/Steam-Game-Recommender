@@ -15,8 +15,8 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
         string temp;
 
         string title, releaseDate, desc;
-        int peakCCU, metacritic, positive, negative, averagePlaytime;
-        float price;
+        int peakCCU, metacritic, averagePlaytime;
+        float price, positive, negative;
         bool windows, mac, linux = false;
 
         try {
@@ -45,9 +45,9 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
             getline(stream, temp, ',');
             metacritic = stoi(temp);
             getline(stream, temp, ',');
-            positive = stoi(temp);
+            positive = stof(temp);
             getline(stream, temp, ',');
-            negative = stoi(temp);
+            negative = stof(temp);
             getline(stream, temp, ',');
             averagePlaytime = stoi(temp);
 
@@ -55,6 +55,8 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
             string genres;
             vector<string> genreList;
             getline(stream, genres);
+
+            // FIXME: For testing
             cout << genres << endl;
 
             // Delete quotation marks at beginning and end of string
@@ -68,6 +70,10 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
             }
             genreList.push_back(genres);
 
+            // FIXME: This is for testing; delete when done
+            count++;
+            cout << title << " " << count << endl;
+
             // Create a new Game object with the given stats
             Game newGame(title, releaseDate, price, peakCCU, averagePlaytime);
             newGame.addDesc(desc);
@@ -77,10 +83,6 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
 
             // Add the new game to the container of Steam games
             steamGames.at(title) = newGame;
-
-            //FIXME: This is for testing; delete when done
-            count++;
-            cout << title << " " << count << endl;
         }
         catch(exception &err) {
             stream.ignore(numeric_limits<streamsize>::max());

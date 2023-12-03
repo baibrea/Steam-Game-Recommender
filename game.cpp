@@ -17,11 +17,15 @@ void Game::compatibleOS(bool windows, bool mac, bool linux) {
     this->mac = mac;
     this->linux = linux;
 }
-void Game::getRating(int metacriticRating, int positive, int negative) {
+void Game::getRating(int metacriticRating, float positive, float negative) {
     this->metacritic = metacriticRating;
-    int sumReviews = positive + negative;
-    this->rating = positive / negative;
-    cout << rating << endl;
+    float sumReviews = positive + negative;
+    if (sumReviews != 0) {
+        this->rating = positive / sumReviews;
+    }
+    else {
+        this->rating = 0;
+    }
 }
 void Game::editGenres(vector<string> genres) {
     this->genres = genres;

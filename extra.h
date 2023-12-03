@@ -8,5 +8,5 @@ using namespace std;
 
 void parseFile(fstream& file, map<string, Game> games);
 
-//TODO: Implement sorting algorithm methods
+// TODO: Implement sorting algorithm methods
 
