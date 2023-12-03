@@ -57,7 +57,7 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
             getline(stream, genres);
 
             // FIXME: For testing
-            cout << genres << endl;
+            //cout << genres << endl;
 
             // Delete quotation marks at beginning and end of string
             genres.erase(0, 1);

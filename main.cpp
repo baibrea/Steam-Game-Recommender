@@ -16,5 +16,18 @@ int main() {
     //TODO: After container is created, pass container by reference into parseFile() so Game objects can be added to it
     parseFile(file, steamGames);
 
+    // Code for UI
+    RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
+
+    Font font;
+    Event event;
+    Text text;
+    Texture texture;
+
+    while (window.isOpen()) {
+        window.clear(Color(26, 42, 61, 0));
+        window.display();
+    }
+
     return 0;
 };
