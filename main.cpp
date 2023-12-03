@@ -203,15 +203,9 @@ int main() {
                         //
                         leftMouseClick(x, y, filterButtons);
                         leftMouseClick(x, y, algoButtons);
-
-                        if (searchBox.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                            typing = true;
-                            if (searchString == "|")
-                                textEntered = true;
-                        }
-
-                        else
-                            typing = false;
+                        typing = clickedSearchBar(searchBox, mousePosition);
+                        if (typing == true && searchString == "|")
+                            textEntered = true;
                     }
                     break;
             }

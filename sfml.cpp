@@ -31,3 +31,10 @@ void leftMouseClick(int x, int y, vector<Button>& buttons) {
         }
     }
 }
+
+bool clickedSearchBar(sf::RectangleShape bounds, sf::Vector2i mousePosition) {
+    if (bounds.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
+        return true;
+    else
+        return false;
+}
