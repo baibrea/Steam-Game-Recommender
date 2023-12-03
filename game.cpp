@@ -30,3 +30,11 @@ void Game::getRating(int metacriticRating, float positive, float negative) {
 void Game::editGenres(vector<string> genres) {
     this->genres = genres;
 }
+
+int Game::getPeakCCU() {
+    return peakCCU;
+}
+
+string Game::getTitle() {
+    return title;
+}

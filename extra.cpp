@@ -82,11 +82,60 @@ void parseFile(fstream& file, map<string, Game>& steamGames) {
             newGame.editGenres(genreList);
 
             // Add the new game to the container of Steam games
-            steamGames.at(title) = newGame;
+            steamGames.insert({title, newGame});
         }
         catch(exception &err) {
             stream.ignore(numeric_limits<streamsize>::max());
             continue;
         }
     }
+}
+
+void quickSort(vector<Game> arr, int low, int high, string filter) {
+    if(low < high) {
+        int pivotPosition = partition(arr, low, high, filter);
+        quickSort(arr, low, pivotPosition - 1, filter);
+        quickSort(arr, pivotPosition + 1, high, filter);
+    }
+}
+
+int partition(vector<Game> arr, int low, int high, string filter) {
+    int pivotValue = 0;
+    if(filter == "peakCCU") {
+        int firstValue = (low + rand() % (high - low));
+        int secondValue = (low + rand() % (high - low));
+        int thirdValue = (low + rand() % (high - low));
+        if(thirdValue < firstValue < secondValue || secondValue < firstValue < thirdValue) {
+            arr[firstValue].getPeakCCU();
+        }
+        else if (thirdValue < secondValue < firstValue || firstValue < secondValue << thirdValue) {
+            arr[secondValue].getPeakCCU();
+        }
+        else {
+            arr[thirdValue].getPeakCCU();
+        }
+    }
+    int up = low, down = high;
+
+    while(up < down) {
+        for(int j = up; j < high; j++) {
+            if(arr[up].getPeakCCU() > pivotValue) {
+                break;
+            }
+            up++;
+        }
+        for(int j = high; j > low; j--) {
+            if(arr[down].getPeakCCU() < pivotValue) {
+                break;
+            }
+            down--;
+        }
+        if(up < down) {
+            swap(arr[up], arr[down]);
+        }
+    }
+    swap(arr[low], arr[down]);
+    cout << "Still running: " << endl;
+    return down;
+
 }

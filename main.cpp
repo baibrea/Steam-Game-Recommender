@@ -19,6 +19,20 @@ int main() {
     //TODO: After container is created, pass container by reference into parseFile() so Game objects can be added to it
     parseFile(file, steamGames);
 
+    // Extra array for sorting
+    cout << steamGames.size();
+    vector<Game> arr;
+    for(auto &game: steamGames) {
+        arr.push_back(game.second);
+    }
+    // Running QuickSort
+    quickSort(arr, 0, arr.size()-1, "peakCCU");
+    for(int i = 0; i < arr.size(); i++) {
+        cout << "Game: " << arr.at(i).getTitle() << " Peak CCU: " << arr.at(i).getPeakCCU() << endl;
+    }
+
+
+    // Code for UI
     // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
 

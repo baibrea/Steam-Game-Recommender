@@ -23,5 +23,7 @@ public:
     void compatibleOS(bool windows, bool mac, bool linux);
     void getRating(int metacriticRating, float positive, float negative);
     void editGenres(vector<string> genres);
+    int getPeakCCU();
+    string getTitle();
 };
 
