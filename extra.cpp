@@ -72,7 +72,7 @@ void parseFile(fstream& file, map<string, Game> steamGames) {
 
             // FIXME: This is for testing; delete when done
             count++;
-            cout << title << " " << count << endl;
+            //cout << title << " " << count << endl;
 
             // Create a new Game object with the given stats
             Game newGame(title, releaseDate, price, peakCCU, averagePlaytime);

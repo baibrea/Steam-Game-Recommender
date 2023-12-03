@@ -4,7 +4,9 @@
 #include <map>
 #include "extra.h"
 #include "game.h"
+#include <SFML/Graphics.hpp>
 using namespace std;
+using namespace sf;
 
 int main() {
     //TODO: Create container for Game objects
