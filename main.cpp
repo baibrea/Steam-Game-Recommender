@@ -240,7 +240,7 @@ int main() {
                             searchString.push_back('|');
                         }
                         // If user presses "Enter," search for current string in game titles
-                        if (event.key.code == sf::Keyboard::Enter && searchString.size() > 1) {
+                        if (event.key.code == sf::Keyboard::Enter) {
                             foundGames.clear();
                             startIndex = 0;
                             sorted = false;
@@ -296,21 +296,14 @@ int main() {
 
                             sorted = true;
                             // TODO: Sort by selected filters
-                            if(foundGames.size() >= 1) {
-                                if (algorithm == "mergeSort") {
-                                    mergeSort(foundGames, 0, foundGames.size() - 1, filter);
-                                }
-                                else {
-                                    quickSort(foundGames, 0, foundGames.size() - 1, filter);
-                                }
+                            if(foundGames.size() < 1) {
+                                foundGames = allGames;
+                            }
+                            if (algorithm == "mergeSort") {
+                                mergeSort(foundGames, 0, foundGames.size() - 1, filter);
                             }
                             else {
-                                if (algorithm == "mergeSort") {
-                                    mergeSort(allGames, 0, allGames.size() - 1, filter);
-                                }
-                                else {
-                                    quickSort(allGames, 0, allGames.size() - 1, filter);
-                                }
+                                quickSort(foundGames, 0, foundGames.size() - 1, filter);
                             }
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
                             chrono::duration<float> timePassed = endTime - startTime;
