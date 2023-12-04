@@ -116,13 +116,32 @@ void quickSort(vector<Game>& arr, int low, int high, string filter) {
 }
 
 int partition(vector<Game>& arr, int low, int high, string filter) {
+    int mid = (low + high) / 2;
     double pivotValue;
-    if(filter == "price")
-        pivotValue = arr[low].getPrice();
-    else if(filter == "rating")
-        pivotValue = arr[low].getRatingValue();
-    else if(filter == "peakCCU")
-        pivotValue = arr[low].getPeakCCU();
+    if(filter == "price") {
+        if(arr[mid].getPrice() < arr[low].getPrice() < arr[high].getPrice() || arr[high].getPrice() < arr[low].getPrice() < arr[mid].getPrice())
+            pivotValue = arr[low].getPrice();
+        else if(arr[low].getPrice() < arr[mid].getPrice() < arr[high].getPrice() || arr[high].getPrice() < arr[mid].getPrice() < arr[low].getPrice())
+            pivotValue = arr[mid].getPrice();
+        else
+            pivotValue = arr[high].getPrice();
+    }
+    else if(filter == "rating") {
+        if(arr[mid].getRatingValue() < arr[low].getRatingValue() < arr[high].getRatingValue() || arr[high].getRatingValue() < arr[low].getRatingValue() < arr[mid].getRatingValue())
+            pivotValue = arr[low].getRatingValue();
+        else if(arr[low].getRatingValue() < arr[mid].getRatingValue() < arr[high].getRatingValue() || arr[high].getRatingValue() < arr[mid].getRatingValue() < arr[low].getRatingValue())
+            pivotValue = arr[mid].getRatingValue();
+        else
+            pivotValue = arr[high].getRatingValue();
+    }
+    else if(filter == "peakCCU") {
+        if(arr[mid].getPeakCCU() < arr[low].getPeakCCU() < arr[high].getPeakCCU() || arr[high].getPeakCCU() < arr[low].getPeakCCU() < arr[mid].getPeakCCU())
+            pivotValue = arr[low].getPeakCCU();
+        else if(arr[low].getPeakCCU() < arr[mid].getPeakCCU() < arr[high].getPeakCCU() || arr[high].getPeakCCU() < arr[mid].getPeakCCU() < arr[low].getPeakCCU())
+            pivotValue = arr[mid].getPeakCCU();
+        else
+            pivotValue = arr[high].getPeakCCU();
+    }
     int up = low, down = high;
 
     while(up < down) {
@@ -148,27 +167,27 @@ int partition(vector<Game>& arr, int low, int high, string filter) {
     return down;
 }
 
-bool quickUpHelper(Game up, double pivotValue, string filter) {
+bool quickUpHelper(Game& up, double pivotValue, string filter) {
     if(filter == "price") {
-        return up.getPrice() > (int)pivotValue;
+        return up.getPrice() > pivotValue;
     }
     else if(filter == "rating") {
         return up.getRatingValue() > pivotValue;
     }
     else if(filter == "peakCCU") {
-        return up.getPeakCCU() > (int)pivotValue;
+        return (float)up.getPeakCCU() > pivotValue;
     }
 }
 
-bool quickDownHelper(Game down, double pivotValue, string filter) {
+bool quickDownHelper(Game& down, double pivotValue, string filter) {
     if(filter == "price") {
-        return down.getPrice() < (int)pivotValue;
+        return down.getPrice() < pivotValue;
     }
     else if(filter == "rating") {
         return down.getRatingValue() < pivotValue;
     }
     else if(filter == "peakCCU") {
-        return down.getPeakCCU() < (int)pivotValue;
+        return (float)down.getPeakCCU() < pivotValue;
     }
 }
 
@@ -219,7 +238,7 @@ void merge(vector<Game>& arr, int left, int mid, int right, string filter) {
         rightIndex++;
         mergedIndex++;
     }
-    cout << "Still running..." << endl;
+//    cout << "Still running..." << endl;
 }
 
 bool mergeHelper(Game leftGame, Game rightGame, string filter) {

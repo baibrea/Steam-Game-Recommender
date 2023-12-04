@@ -28,9 +28,9 @@ int main() {
     }
 
 ////     Running QuickSort
-//    quickSort(arr, 0, arr.size()-1, "rating");
+//    quickSort(arr, 0, arr.size()-1, "price");
 //    for(int i = 0; i < arr.size(); i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << " Rating: " << arr.at(i).getRatingValue() << endl;
+//        cout << "Game: " << arr.at(i).getTitle() << " Price: " << arr.at(i).getPrice() << endl;
 //    }
 
 ////  Running MergeSort
@@ -244,7 +244,12 @@ int main() {
                         leftMouseClick(x, y, filterButtons);
                         leftMouseClick(x, y, algoButtons);
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                            chrono::time_point<chrono::high_resolution_clock> startTime = chrono::high_resolution_clock::now();
                             // TODO: Sort by selected filters
+//                            mergeSort(arr, 0, arr.size()-1, "rating");
+                            chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
+                            chrono::duration<float> timePassed = endTime - startTime;
+                            cout << timePassed.count();
                         }
                         typing = clickedSearchBar(searchBox, mousePosition);
                         if (typing == true && searchString == "|")
