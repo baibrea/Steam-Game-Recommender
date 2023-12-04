@@ -55,6 +55,10 @@ int main() {
 
     Event event;
 
+    // Sets up back button
+    Texture backButtonTexture;
+    Sprite backButtonSprite;
+
     // Sets up side bar
     sf::RectangleShape sideBar(sf::Vector2f(200, 600));
     sideBar.setFillColor(sf::Color(52, 109, 157));
@@ -381,6 +385,11 @@ int main() {
                                 textEntered = false;
                             }
                         }
+
+                        if (gameOpen && backButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                            gameOpen = false;
+                        }
+
                     }
                     break;
                 case Event::MouseWheelScrolled:
@@ -498,14 +507,20 @@ int main() {
                     }
                 }
             }
+
             // If game is open, create elements of the game's stats
             // TODO: Work on selected game's display
-            // TODO: MAKE BACK BUTTON HERE!!!
             if (gameOpen) {
                 string title = currGame.getTitle();
                 sf::Text titleText = createText(title, 24, sf::Color::White);
                 titleText.setFont(font);
                 setTextCenter(titleText, 600, 110);
+
+                backButtonTexture.loadFromFile("../files/images/backbutton.png");
+                backButtonSprite.setTexture(backButtonTexture);
+                // FIXME: Maybe tweak the position.
+                backButtonSprite.setPosition(220, 80);
+                window.draw(backButtonSprite);
 
 
                 // Draw elements
