@@ -21,7 +21,7 @@ int main() {
     parseFile(file, steamGames);
 
     // Extra array for sorting
-    cout << steamGames.size();
+//    cout << steamGames.size();
     vector<Game> arr;
     for(auto &game: steamGames) {
         arr.push_back(game.second);
@@ -246,10 +246,10 @@ int main() {
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             chrono::time_point<chrono::high_resolution_clock> startTime = chrono::high_resolution_clock::now();
                             // TODO: Sort by selected filters
-//                            mergeSort(arr, 0, arr.size()-1, "rating");
+                            // quickSort(arr, 0, arr.size()-1, "rating");
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
                             chrono::duration<float> timePassed = endTime - startTime;
-                            cout << timePassed.count();
+                            cout << "Sorting executed in " << timePassed.count() << " seconds.";
                         }
                         typing = clickedSearchBar(searchBox, mousePosition);
                         if (typing == true && searchString == "|")

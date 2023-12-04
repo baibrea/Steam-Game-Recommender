@@ -146,7 +146,6 @@ int partition(vector<Game>& arr, int low, int high, string filter) {
 
     while(up < down) {
         for(int j = up; j < high; j++) {
-
             if(quickUpHelper(arr[up], pivotValue, filter)) {
                 break;
             }
@@ -163,7 +162,7 @@ int partition(vector<Game>& arr, int low, int high, string filter) {
         }
     }
     swap(arr[low], arr[down]);
-    cout << "Still running: " << endl;
+//    cout << "Still running: " << endl;
     return down;
 }
 
