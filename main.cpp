@@ -206,28 +206,23 @@ int main() {
 
                 // If user enters text, append characters to search box text
                 case Event::TextEntered:
-                    if (typing == true) {
+                    if (typing) {
                         input = static_cast<char>(event.text.unicode);
                         if (31 < event.text.unicode && event.text.unicode < 128) {
                             textEntered = true;
                             searchString.pop_back();
                             searchString.push_back(input);
                             searchString.push_back('|');
-                            cout << searchString << endl;
                         }
                     }
                     break;
                 case Event::KeyPressed:
                     // If user presses backspace, delete the last character in the search bar
-                    if (typing == true) {
+                    if (typing) {
                         if (event.key.code == sf::Keyboard::Backspace and searchString.size() > 1) {
                             searchString.pop_back();
                             searchString.pop_back();
                             searchString.push_back('|');
-                            cout << searchString << endl;
-                        }
-                        if (searchString.size() == 1) {
-                            textEntered = false;
                         }
                     }
                     // TODO: If user presses enter, search for current string in game titles (ignore case sensitivity)
@@ -252,8 +247,21 @@ int main() {
                             cout << "Sorting executed in " << timePassed.count() << " seconds.";
                         }
                         typing = clickedSearchBar(searchBox, mousePosition);
-                        if (typing == true && searchString == "|")
+                        if (typing) {
                             textEntered = true;
+                            if (searchString.at(searchString.size() - 1) != '|') {
+                                searchString.push_back('|');
+                            }
+                        }
+                        if (!typing) {
+                            if (searchString.size() > 1 && searchString != "search") {
+                                cout << searchString << endl;
+                                searchString.pop_back();
+                            }
+                            else {
+                                textEntered = false;
+                            }
+                        }
                     }
                     break;
             }
