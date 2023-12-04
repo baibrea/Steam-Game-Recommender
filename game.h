@@ -18,6 +18,7 @@ private:
     int averagePlaytime;
     vector<string> genres;
 public:
+    Game();
     Game(string title, string releaseDate, float price, int peakCCU, int averagePlaytime);
     void addDesc(string description);
     void compatibleOS(bool windows, bool mac, bool linux);

@@ -1,5 +1,9 @@
 #include "game.h"
 
+Game::Game() {
+
+}
+
 Game::Game(string title, string releaseDate, float price, int peakCCU, int averagePlaytime) {
     this->title = title;
     this->releaseDate = releaseDate;

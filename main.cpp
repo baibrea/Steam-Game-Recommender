@@ -53,12 +53,6 @@ int main() {
     // Vector to hold all sf::Text objects
     vector<sf::Text> texts;
 
-    bool textEntered = false;
-    bool displayTitles = false;
-    bool sorted = false;
-    string searchString = "|";
-    int startIndex = 0;
-
     Event event;
 
     // Sets up side bar
@@ -238,7 +232,15 @@ int main() {
     }
 
     bool typing = false;
+    bool textEntered = false;
+    bool displayTitles = false;
+    bool sorted = false;
+    bool gameOpen = false;
+    string searchString = "|";
+    int startIndex = 0;
     string ascDesc = "ascending";
+
+    Game currGame;
 
     // Code for Main Window
     while (window.isOpen()) {
@@ -314,8 +316,9 @@ int main() {
                             int titleNum;
                             titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
                             if (foundGames.size() > (startIndex + titleNum)) {
-                                Game selectedGame = foundGames.at(startIndex + titleNum);
-                                cout << selectedGame.getTitle();
+                                gameOpen = true;
+                                currGame = foundGames.at(startIndex + titleNum);
+                                cout << currGame.getTitle() << endl;
                             }
                         }
 
@@ -369,7 +372,7 @@ int main() {
                         }
                         if (!typing) {
                             if (searchString.size() > 1 && searchString != "search") {
-                                cout << searchString << endl;
+//                                cout << searchString << endl;
                                 if (searchString.at(searchString.size() - 1) == '|') {
                                     searchString.pop_back();
                                 }
@@ -449,6 +452,7 @@ int main() {
             window.clear(Color(26, 42, 61, 0));
             window.draw(sideBar);
 
+            // Draw sidebar buttons and text
             for (auto& button : filterButtons) {
                 button.drawButton(window);
             }
@@ -463,6 +467,8 @@ int main() {
             }
             window.draw(sortButton);
             window.draw(sortText);
+
+            // Draw search bar elements
             window.draw(searchBox);
             if (!textEntered) {
                 window.draw(searchText);
@@ -470,11 +476,17 @@ int main() {
             else {
                 window.draw(searchInput);
             }
+
+            // Draw game window elements
+            // Draw boxes if no game is currently open
             window.draw(gameBox);
-            for (auto& box : titleBoxes) {
-                window.draw(box);
+            if (!gameOpen) {
+                for (auto &box: titleBoxes) {
+                    window.draw(box);
+                }
             }
-            if (titleTexts.size() > 0) {
+            // Draw game titles if no game is no game is currently open
+            if (titleTexts.size() > 0 && !gameOpen) {
                 if (titleTexts.size() >= 14) {
                     for (int i = 0; i < 14; i++) {
                         window.draw(titleTexts.at(i));
@@ -486,6 +498,23 @@ int main() {
                     }
                 }
             }
+            // If game is open, create elements of the game's stats
+            // TODO: Work on selected game's display
+            // TODO: MAKE BACK BUTTON HERE!!!
+            if (gameOpen) {
+                string title = currGame.getTitle();
+                sf::Text titleText = createText(title, 24, sf::Color::White);
+                titleText.setFont(font);
+                setTextCenter(titleText, 600, 110);
+
+
+                // Draw elements
+                window.draw(titleText);
+
+
+            }
+
+
 
             window.display();
         }
