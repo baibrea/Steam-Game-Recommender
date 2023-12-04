@@ -15,7 +15,7 @@ void setTextCenter(sf::Text& text, float x, float y) {
     text.setPosition(x, y);
 }
 
-void leftMouseClick(int x, int y, vector<Button>& buttons) {
+void leftMouseClickButton(int x, int y, vector<Button>& buttons) {
     if (x < 200) {
         for (int i = 0; i < buttons.size(); i++) {
             sf::FloatRect bounds = buttons.at(i).getBounds();
@@ -31,6 +31,15 @@ void leftMouseClick(int x, int y, vector<Button>& buttons) {
         }
     }
 }
+int leftMouseClickTitle(int x, int y, vector<sf::RectangleShape>& titleBoxes) {
+    for (int i = 0; i < 14; i++) {
+        sf::FloatRect bounds = titleBoxes.at(i).getGlobalBounds();
+        if (bounds.contains(x, y)) {
+            return i;
+        }
+    }
+}
+
 
 bool clickedSearchBar(sf::RectangleShape bounds, sf::Vector2i mousePosition) {
     if (bounds.getGlobalBounds().contains(mousePosition.x, mousePosition.y))

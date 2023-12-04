@@ -200,6 +200,15 @@ int main() {
     gameBox.setOutlineThickness(4);
     gameBox.setOutlineColor(sf::Color::White);
 
+    // Create boxes to display game titles
+    vector<sf::RectangleShape> titleBoxes;
+    int height = 102;
+    for (int i = 0; i < 14; i++) {
+        sf::RectangleShape newBox = createTitleBox(height);
+        titleBoxes.push_back(newBox);
+        height += 35;
+    }
+
     bool typing = false;
 
     // Code for Main Window
@@ -264,15 +273,21 @@ int main() {
                             cout << foundGames.size();
                         }
                     }
-
-                    // Placeholder Text
                     break;
                 case Event::MouseButtonPressed:
                     sf::Mouse mouse;
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         sf::Vector2i mousePosition = mouse.getPosition(window);
-                        leftMouseClick(mousePosition.x, mousePosition.y, filterButtons);
-                        leftMouseClick(mousePosition.x, mousePosition.y, algoButtons);
+                        leftMouseClickButton(mousePosition.x, mousePosition.y, filterButtons);
+                        leftMouseClickButton(mousePosition.x, mousePosition.y, algoButtons);
+                        if (!foundGames.empty()) {
+                            int titleNum;
+                            titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
+                            if (foundGames.size() > (startIndex + titleNum)) {
+                                Game selectedGame = foundGames.at(startIndex + titleNum);
+                                cout << selectedGame.getTitle();
+                            }
+                        }
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
@@ -344,15 +359,6 @@ int main() {
             sf::Text searchInput = createText(searchString, 24, sf::Color::White);
             searchInput.setFont(font);
             searchInput.setPosition(240, 25);
-
-            // Create boxes to display game titles
-            vector<sf::RectangleShape> titleBoxes;
-            int height = 102;
-            for (int i = 0; i < 14; i++) {
-                sf::RectangleShape newBox = createTitleBox(height);
-                titleBoxes.push_back(newBox);
-                height += 35;
-            }
 
             // Create text for game titles (search bar)
             // FIXME: Errors with printing out the sorted titles
