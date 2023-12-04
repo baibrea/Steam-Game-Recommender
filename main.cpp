@@ -536,60 +536,60 @@ int main() {
 
                 // Create labels for stats
                 sf::Text releaseDateLabel = createText("RELEASE DATE:", 18, sf::Color(121, 136, 161));
-                releaseDateLabel.setPosition(250, 140);
+                releaseDateLabel.setPosition(600, 160);
                 releaseDateLabel.setFont(font);
 
                 sf::Text priceLabel = createText("PRICE:", 18, sf::Color(121, 136, 161));
-                priceLabel.setPosition(250, 170);
+                priceLabel.setPosition(600, 200);
                 priceLabel.setFont(font);
 
                 sf::Text ratingLabel = createText("USER RATING:", 18, sf::Color(121, 136, 161));
-                ratingLabel.setPosition(250, 200);
+                ratingLabel.setPosition(600, 240);
                 ratingLabel.setFont(font);
 
                 sf::Text metacriticLabel = createText("METACRITIC RATING:", 18, sf::Color(121, 136, 161));
-                metacriticLabel.setPosition(250, 230);
+                metacriticLabel.setPosition(600, 280);
                 metacriticLabel.setFont(font);
 
                 sf::Text osLabel = createText("AVAILABLE ON:", 18, sf::Color(121, 136, 161));
-                osLabel.setPosition(250, 260);
+                osLabel.setPosition(600, 320);
                 osLabel.setFont(font);
 
                 sf::Text playtimeLabel = createText("AVERAGE PLAYTIME:", 18, sf::Color(121, 136, 161));
-                playtimeLabel.setPosition(250, 290);
+                playtimeLabel.setPosition(600, 360);
                 playtimeLabel.setFont(font);
 
-                sf::Text genresLabel = createText("TAGS:", 18, sf::Color(121, 136, 161));
-                genresLabel.setPosition(250, 320);
+                sf::Text genresLabel = createText("TAGS:", 20, sf::Color(121, 136, 161));
+                genresLabel.setPosition(250, 410);
                 genresLabel.setFont(font);
 
-                sf::Text descriptionLabel = createText("ABOUT:", 18, sf::Color(121, 136, 161));
-                descriptionLabel.setPosition(250, 380);
-                descriptionLabel.setFont(font);
+//                sf::Text descriptionLabel = createText("ABOUT:", 18, sf::Color(121, 136, 161));
+//                descriptionLabel.setPosition(250, 380);
+//                descriptionLabel.setFont(font);
 
 
                 // Create stats text
                 sf::Text releaseDate = createText(currGame.getReleaseDate(), 20, sf::Color(53, 155, 233));
                 releaseDate.setStyle(sf::Text::Bold);
-                releaseDate.setPosition(395, 138);
+                releaseDate.setPosition(745, 158);
                 releaseDate.setFont(font);
 
                 string priceVal = "$" + to_string(currGame.getPrice());
                 sf::Text price = createText(priceVal.substr(0, priceVal.length() - 4), 20, sf::Color(53, 155, 233));
                 price.setStyle(sf::Text::Bold);
-                price.setPosition(315, 168);
+                price.setPosition(665, 198);
                 price.setFont(font);
 
                 float ratingVal = currGame.getRatingValue() * 100;
                 string ratingString = to_string(ratingVal);
                 sf::Text rating = createText(ratingString.substr(0, ratingString.length() - 4), 20, sf::Color(53, 155, 233));
                 rating.setStyle(sf::Text::Bold);
-                rating.setPosition(380, 198);
+                rating.setPosition(730, 238);
                 rating.setFont(font);
 
                 sf::Text metacriticRating = createText(to_string(currGame.getMetacritic()), 20, sf::Color(53, 155, 233));
                 metacriticRating.setStyle(sf::Text::Bold);
-                metacriticRating.setPosition(440, 228);
+                metacriticRating.setPosition(790, 278);
                 metacriticRating.setFont(font);
 
                 string availableSystems = "";
@@ -614,13 +614,15 @@ int main() {
 
                 sf::Text os = createText(availableSystems, 20, sf::Color(53, 155, 233));
                 os.setStyle(sf::Text::Bold);
-                os.setPosition(390, 258);
+                os.setPosition(740, 318);
                 os.setFont(font);
 
-                string playtimeVal = to_string(currGame.getPlaytime()) + " mins";
-                sf::Text playtime = createText(playtimeVal, 20, sf::Color(53, 155, 233));
+                float playtimeVal = currGame.getPlaytime() / 60.0;
+                string playtimeStr = to_string(playtimeVal);
+                playtimeStr = playtimeStr.substr(0, playtimeStr.size() - 4) + " hours";
+                sf::Text playtime = createText(playtimeStr, 20, sf::Color(53, 155, 233));
                 playtime.setStyle(sf::Text::Bold);
-                playtime.setPosition(435, 288);
+                playtime.setPosition(785, 358);
                 playtime.setFont(font);
 
                 string genreList = "";
@@ -630,12 +632,13 @@ int main() {
                     for (auto& letter : genre) {
                         upperGenre.push_back(toupper(letter));
                     }
-                    genreList = genreList + upperGenre + " | ";
+                    genreList = genreList + upperGenre + "  |  ";
                 }
-                genreList = genreList.substr(0, genreList.size() - 2);
+                genreList = genreList.substr(0, genreList.size() - 3);
 
                 sf::Text genres = createText(genreList, 20, sf::Color(87, 161, 218));
-                genres.setPosition(250, 340);
+                genres.setStyle(sf::Text::Bold);
+                genres.setPosition(250, 440);
                 genres.setFont(font);
 
                 // Draw elements
@@ -646,7 +649,7 @@ int main() {
                 window.draw(metacriticLabel);
                 window.draw(osLabel);
                 window.draw(playtimeLabel);
-                window.draw(descriptionLabel);
+//                window.draw(descriptionLabel);
                 window.draw(genresLabel);
 
                 window.draw(releaseDate);
