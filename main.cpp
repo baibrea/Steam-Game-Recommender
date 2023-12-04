@@ -193,6 +193,10 @@ int main() {
     // Code for Main Window
     while (window.isOpen()) {
 
+        // Update "Sort" button visuals
+        sortButton.setFillColor(sf::Color(160, 160, 160));
+        sortText.setFillColor(sf::Color::White);
+
         // Handles User Interaction with Window
         char input;
         Vector2i mousePosition;
@@ -239,6 +243,9 @@ int main() {
                         leftMouseClick(x, y, filterButtons);
                         leftMouseClick(x, y, algoButtons);
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                            sortButton.setFillColor(sf::Color(96, 96, 96));
+                            sortText.setFillColor(sf::Color(192, 192, 192));
+
                             chrono::time_point<chrono::high_resolution_clock> startTime = chrono::high_resolution_clock::now();
                             // TODO: Sort by selected filters
                             // quickSort(arr, 0, arr.size()-1, "rating");
