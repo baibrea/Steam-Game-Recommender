@@ -317,7 +317,7 @@ int main() {
                         leftMouseClickButton(mousePosition.x, mousePosition.y, filterButtons);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, algoButtons);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, ascendingDescendingButtons);
-                        if (!foundGames.empty() && !gameOpen) {
+                        if (!foundGames.empty() && !gameOpen && mousePosition.x > 200 && mousePosition.y > 90) {
                             int titleNum;
                             titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
                             if (foundGames.size() > (startIndex + titleNum)) {
