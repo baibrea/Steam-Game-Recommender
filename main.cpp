@@ -24,21 +24,21 @@ int main() {
 
     // Extra array for sorting
 //    cout << steamGames.size();
-    vector<Game> arr;
+    vector<Game> allGames;
     for(auto &game: steamGames) {
-        arr.push_back(game.second);
+        allGames.push_back(game.second);
     }
 
 ////     Running QuickSort
-//    quickSort(arr, 0, arr.size()-1, "price");
-//    for(int i = 0; i < arr.size(); i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << " Price: " << arr.at(i).getPrice() << endl;
+//    quickSort(allGames, 0, allGames.size()-1, "price");
+//    for(int i = 0; i < allGames.size(); i++) {
+//        cout << "Game: " << allGames.at(i).getTitle() << " Price: " << allGames.at(i).getPrice() << endl;
 //    }
 
 ////  Running MergeSort
-//    mergeSort(arr, 0, arr.size()-1, "rating");
-//    for(int i = 0; i < arr.size()-1; i++) {
-//        cout << "Game: " << arr.at(i).getTitle() << " Rating: " << arr.at(i).getRatingValue() << endl;
+//    mergeSort(allGames, 0, allGames.size()-1, "rating");
+//    for(int i = 0; i < allGames.size()-1; i++) {
+//        cout << "Game: " << allGames.at(i).getTitle() << " Rating: " << allGames.at(i).getRatingValue() << endl;
 //    }
 
 
@@ -276,7 +276,7 @@ int main() {
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
-                            foundGames.clear();
+//                            foundGames.clear();
                             startIndex = 0;
 
                             string filter;
@@ -296,13 +296,22 @@ int main() {
 
                             sorted = true;
                             // TODO: Sort by selected filters
-                            if (algorithm == "mergeSort") {
-                                mergeSort(arr, 0, arr.size() - 1, filter);
+                            if(foundGames.size() >= 1) {
+                                if (algorithm == "mergeSort") {
+                                    mergeSort(foundGames, 0, foundGames.size() - 1, filter);
+                                }
+                                else {
+                                    quickSort(foundGames, 0, foundGames.size() - 1, filter);
+                                }
                             }
                             else {
-                                quickSort(arr, 0, arr.size() - 1, filter);
+                                if (algorithm == "mergeSort") {
+                                    mergeSort(allGames, 0, allGames.size() - 1, filter);
+                                }
+                                else {
+                                    quickSort(allGames, 0, allGames.size() - 1, filter);
+                                }
                             }
-
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
                             chrono::duration<float> timePassed = endTime - startTime;
                             cout << "Sorting executed in " << timePassed.count() << " seconds.";
@@ -370,8 +379,8 @@ int main() {
             height = 90;
             if (sorted) {
                 titleTexts.clear();
-                for (int k = startIndex; k < arr.size(); k++) {
-                    sf::Text newText = createText(arr.at(k).getTitle(), 22, sf::Color::White);
+                for (int k = startIndex; k < foundGames.size(); k++) {
+                    sf::Text newText = createText(foundGames.at(k).getTitle(), 22, sf::Color::White);
                     newText.setFont(font);
                     newText.setPosition(230, height);
                     titleTexts.push_back(newText);
