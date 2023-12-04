@@ -3,6 +3,7 @@
 #include <fstream>
 #include <map>
 #include <algorithm>
+#include <cmath>
 #include "extra.h"
 #include "game.h"
 #include "sfml.h"
@@ -316,7 +317,7 @@ int main() {
                         leftMouseClickButton(mousePosition.x, mousePosition.y, filterButtons);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, algoButtons);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, ascendingDescendingButtons);
-                        if (!foundGames.empty()) {
+                        if (!foundGames.empty() && !gameOpen) {
                             int titleNum;
                             titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
                             if (foundGames.size() > (startIndex + titleNum)) {
@@ -511,6 +512,7 @@ int main() {
             // If game is open, create elements of the game's stats
             // TODO: Work on selected game's display
             if (gameOpen) {
+                // Create title element
                 string title = currGame.getTitle();
                 sf::Text titleText = createText(title, 24, sf::Color::White);
                 titleText.setFont(font);
@@ -522,10 +524,111 @@ int main() {
                 backButtonSprite.setPosition(220, 80);
                 window.draw(backButtonSprite);
 
+                // Create labels for stats
+                sf::Text releaseDateLabel = createText("RELEASE DATE:", 18, sf::Color(121, 136, 161));
+                releaseDateLabel.setPosition(250, 140);
+                releaseDateLabel.setFont(font);
+
+                sf::Text priceLabel = createText("PRICE:", 18, sf::Color(121, 136, 161));
+                priceLabel.setPosition(250, 170);
+                priceLabel.setFont(font);
+
+                sf::Text ratingLabel = createText("USER RATING:", 18, sf::Color(121, 136, 161));
+                ratingLabel.setPosition(250, 200);
+                ratingLabel.setFont(font);
+
+                sf::Text metacriticLabel = createText("METACRITIC RATING:", 18, sf::Color(121, 136, 161));
+                metacriticLabel.setPosition(250, 230);
+                metacriticLabel.setFont(font);
+
+                sf::Text osLabel = createText("AVAILABLE ON:", 18, sf::Color(121, 136, 161));
+                osLabel.setPosition(250, 260);
+                osLabel.setFont(font);
+
+                sf::Text playtimeLabel = createText("AVERAGE PLAYTIME:", 18, sf::Color(121, 136, 161));
+                playtimeLabel.setPosition(250, 290);
+                playtimeLabel.setFont(font);
+
+                sf::Text genresLabel = createText("TAGS:", 18, sf::Color(121, 136, 161));
+                genresLabel.setPosition(250, 320);
+                genresLabel.setFont(font);
+
+                sf::Text descriptionLabel = createText("ABOUT:", 18, sf::Color(121, 136, 161));
+                descriptionLabel.setPosition(250, 380);
+                descriptionLabel.setFont(font);
+
+
+                // Create stats text
+                sf::Text releaseDate = createText(currGame.getReleaseDate(), 20, sf::Color(53, 155, 233));
+                releaseDate.setStyle(sf::Text::Bold);
+                releaseDate.setPosition(395, 138);
+                releaseDate.setFont(font);
+
+                string priceVal = "$" + to_string(floor(currGame.getPrice()));
+                sf::Text price = createText(priceVal, 20, sf::Color(53, 155, 233));
+                price.setStyle(sf::Text::Bold);
+                price.setPosition(315, 168);
+                price.setFont(font);
+
+                float ratingVal = currGame.getRatingValue() * 100;
+                sf::Text rating = createText(to_string(floor(ratingVal)) , 20, sf::Color(53, 155, 233));
+                rating.setStyle(sf::Text::Bold);
+                rating.setPosition(380, 198);
+                rating.setFont(font);
+
+                sf::Text metacriticRating = createText(to_string(floor(currGame.getMetacritic())) , 20, sf::Color(53, 155, 233));
+                metacriticRating.setStyle(sf::Text::Bold);
+                metacriticRating.setPosition(440, 228);
+                metacriticRating.setFont(font);
+
+                string availableSystems = "";
+                int count = 0;
+                if (currGame.getWindows()) {
+                    availableSystems += "Windows";
+                    count++;
+                }
+                if (currGame.getMac()) {
+                    if (count > 0) {
+                        availableSystems += ", ";
+                    }
+                    availableSystems += "Mac";
+                    count++;
+                }
+                if (currGame.getLinux()) {
+                    if (count > 0) {
+                        availableSystems += ", ";
+                    }
+                    availableSystems += "Linux";
+                }
+
+                sf::Text os = createText(availableSystems, 20, sf::Color(53, 155, 233));
+                os.setStyle(sf::Text::Bold);
+                os.setPosition(390, 258);
+                os.setFont(font);
+
+                string playtimeVal = to_string(currGame.getPlaytime()) + " mins";
+                sf::Text playtime = createText(playtimeVal, 20, sf::Color(53, 155, 233));
+                playtime.setStyle(sf::Text::Bold);
+                playtime.setPosition(435, 288);
+                playtime.setFont(font);
 
                 // Draw elements
                 window.draw(titleText);
+                window.draw(releaseDateLabel);
+                window.draw(priceLabel);
+                window.draw(ratingLabel);
+                window.draw(metacriticLabel);
+                window.draw(osLabel);
+                window.draw(playtimeLabel);
+                window.draw(descriptionLabel);
+                window.draw(genresLabel);
 
+                window.draw(releaseDate);
+                window.draw(price);
+                window.draw(rating);
+                window.draw(metacriticRating);
+                window.draw(os);
+                window.draw(playtime);
 
             }
 

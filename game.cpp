@@ -50,3 +50,31 @@ float Game::getRatingValue() {
 float Game::getPrice() {
     return price;
 }
+
+string Game::getReleaseDate() {
+    return releaseDate;
+}
+
+int Game::getMetacritic() {
+    return metacritic;
+}
+
+float Game::getPositive() {
+    return positive;
+}
+
+int Game::getPlaytime() {
+    return averagePlaytime;
+}
+
+bool Game::getWindows() {
+    return windows;
+}
+
+bool Game::getMac() {
+    return mac;
+}
+
+bool Game::getLinux() {
+    return linux;
+}

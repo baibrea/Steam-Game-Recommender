@@ -13,8 +13,10 @@ private:
     bool windows;
     bool mac;
     bool linux;
-    int metacritic;
+    float positive;
+    float negative;
     float rating;
+    int metacritic;
     int averagePlaytime;
     vector<string> genres;
 public:
@@ -28,5 +30,12 @@ public:
     string getTitle();
     float getRatingValue();
     float getPrice();
+    string getReleaseDate();
+    int getMetacritic();
+    float getPositive();
+    int getPlaytime();
+    bool getWindows();
+    bool getMac();
+    bool getLinux();
 };
 
