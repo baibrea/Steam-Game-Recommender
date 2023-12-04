@@ -93,28 +93,28 @@ int main() {
     filterText.setStyle(sf::Text::Bold);
     filterText.setOutlineThickness(2);
     filterText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(filterText, 100, 150);
+    setTextCenter(filterText, 100, 120);
     texts.push_back(filterText);
 
     sf::Text priceText = createText("Price", 22, sf::Color::White);
     priceText.setFont(font);
     priceText.setOutlineThickness(2);
     priceText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(priceText, 96, 190);
+    setTextCenter(priceText, 96, 150);
     texts.push_back(priceText);
 
     sf::Text ratingText = createText("Rating", 22, sf::Color::White);
     ratingText.setFont(font);
     ratingText.setOutlineThickness(2);
     ratingText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(ratingText, 104, 230);
+    setTextCenter(ratingText, 104, 180);
     texts.push_back(ratingText);
 
     sf::Text popularityText = createText("Popularity", 22, sf::Color::White);
     popularityText.setFont(font);
     popularityText.setOutlineThickness(2);
     popularityText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(popularityText, 120, 270);
+    setTextCenter(popularityText, 120, 210);
     texts.push_back(popularityText);
 
     sf::Text usingText = createText("Using:", 22, sf::Color::White);
@@ -122,44 +122,72 @@ int main() {
     usingText.setStyle(sf::Text::Bold);
     usingText.setOutlineThickness(2);
     usingText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(usingText, 100, 320);
+    setTextCenter(usingText, 100, 250);
     texts.push_back(usingText);
 
     sf::Text quickSortText = createText("Quick Sort", 22, sf::Color::White);
     quickSortText.setFont(font);
     quickSortText.setOutlineThickness(2);
     quickSortText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(quickSortText, 120, 360);
+    setTextCenter(quickSortText, 120, 280);
     texts.push_back(quickSortText);
 
     sf::Text mergeSortText = createText("Merge Sort", 22, sf::Color::White);
     mergeSortText.setFont(font);
     mergeSortText.setOutlineThickness(2);
     mergeSortText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(mergeSortText, 125, 400);
+    setTextCenter(mergeSortText, 125, 310);
     texts.push_back(mergeSortText);
+
+    sf::Text ascendingDescendingText = createText("Ascending/\nDescending:", 22, sf::Color::White);
+    ascendingDescendingText.setFont(font);
+    ascendingDescendingText.setStyle(sf::Text::Bold);
+    ascendingDescendingText.setOutlineThickness(2);
+    ascendingDescendingText.setOutlineColor(Color(24, 68, 84));
+    setTextCenter(ascendingDescendingText, 100, 365);
+    texts.push_back(ascendingDescendingText);
+
+    sf::Text ascendingText = createText("Ascending", 22, sf::Color::White);
+    ascendingText.setFont(font);
+    ascendingText.setOutlineThickness(2);
+    ascendingText.setOutlineColor(Color(24, 68, 84));
+    setTextCenter(ascendingText, 125, 415);
+    texts.push_back(ascendingText);
+
+    sf::Text descendingText = createText("Descending", 22, sf::Color::White);
+    descendingText.setFont(font);
+    descendingText.setOutlineThickness(2);
+    descendingText.setOutlineColor(Color(24, 68, 84));
+    setTextCenter(descendingText, 130, 445);
+    texts.push_back(descendingText);
 
     sf::Text efficiencyText = createText("Efficiency:", 22, sf::Color::White);
     efficiencyText.setFont(font);
     efficiencyText.setOutlineThickness(2);
     efficiencyText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(efficiencyText, 70, 525);
+    setTextCenter(efficiencyText, 70, 545);
     texts.push_back(efficiencyText);
 
     // Create filterButtons
     vector<Button> filterButtons{};
-    Button priceButton("price", 50, 190);
+    Button priceButton("price", 50, 150);
     filterButtons.push_back(priceButton);
-    Button ratingButton("rating", 50, 230);
+    Button ratingButton("rating", 50, 180);
     filterButtons.push_back(ratingButton);
-    Button peakCCUButton("peakCCU", 50, 270);
+    Button peakCCUButton("peakCCU", 50, 210);
     filterButtons.push_back(peakCCUButton);
 
     vector<Button> algoButtons{};
-    Button quickSortButton("quickSort", 50, 360);
+    Button quickSortButton("quickSort", 50, 280);
     algoButtons.push_back(quickSortButton);
-    Button mergeSortButton("mergeSort", 50, 400);
+    Button mergeSortButton("mergeSort", 50, 310);
     algoButtons.push_back(mergeSortButton);
+
+    vector<Button> ascendingDescendingButtons{};
+    Button ascendingButton("ascending", 50, 415);
+    ascendingDescendingButtons.push_back(ascendingButton);
+    Button descendingButton("descending", 50, 445);
+    ascendingDescendingButtons.push_back(descendingButton);
 
     // Create "Sort" button
     sf::RectangleShape sortButton(sf::Vector2f(80, 40));
@@ -168,14 +196,14 @@ int main() {
     sortButton.setOutlineColor(sf::Color(64, 64, 64));
     sf::FloatRect rectBounds = sortButton.getLocalBounds();
     sortButton.setOrigin(rectBounds.left + rectBounds.width/2.0f, rectBounds.top + rectBounds.height/2.0f);
-    sortButton.setPosition(100, 460);
+    sortButton.setPosition(100, 495);
 
     sf::Text sortText = createText("SORT", 22, sf::Color::White);
     sortText.setOutlineThickness(1.5);
     sortText.setOutlineColor(sf::Color(64, 64, 64));
     sortText.setFont(font);
     sortText.setStyle(sf::Text::Bold);
-    setTextCenter(sortText, 100, 460);
+    setTextCenter(sortText, 100, 495);
 
     // Textbox for game search
     sf::RectangleShape searchBox(sf::Vector2f(750, 40));
@@ -210,6 +238,7 @@ int main() {
     }
 
     bool typing = false;
+    string ascDesc = "ascending";
 
     // Code for Main Window
     while (window.isOpen()) {
@@ -280,6 +309,7 @@ int main() {
                         sf::Vector2i mousePosition = mouse.getPosition(window);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, filterButtons);
                         leftMouseClickButton(mousePosition.x, mousePosition.y, algoButtons);
+                        leftMouseClickButton(mousePosition.x, mousePosition.y, ascendingDescendingButtons);
                         if (!foundGames.empty()) {
                             int titleNum;
                             titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
@@ -305,6 +335,11 @@ int main() {
                             for (auto& button: algoButtons) {
                                 if (button.isActive()) {
                                     algorithm = button.getName();
+                                }
+                            }
+                            for (auto& button: ascendingDescendingButtons) {
+                                if (button.isActive()) {
+                                    ascDesc = button.getName();
                                 }
                             }
 
@@ -366,12 +401,23 @@ int main() {
             height = 90;
             vector<sf::Text> titleTexts;
             if (!foundGames.empty() && startIndex < foundGames.size()) {
-                for (int j = startIndex; j < foundGames.size(); j++) {
-                    sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
-                    newText.setFont(font);
-                    newText.setPosition(230, height);
-                    titleTexts.push_back(newText);
-                    height += 35;
+                if(ascDesc == "ascending") {
+                    for (int j = startIndex; j < foundGames.size(); j++) {
+                        sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
+                        newText.setFont(font);
+                        newText.setPosition(230, height);
+                        titleTexts.push_back(newText);
+                        height += 35;
+                    }
+                }
+                else {
+                    for (int j = foundGames.size() - 1; j >= startIndex; j--) {
+                        sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
+                        newText.setFont(font);
+                        newText.setPosition(230, height);
+                        titleTexts.push_back(newText);
+                        height += 35;
+                    }
                 }
             }
 
@@ -379,12 +425,23 @@ int main() {
             height = 90;
             if (sorted) {
                 titleTexts.clear();
-                for (int k = startIndex; k < foundGames.size(); k++) {
-                    sf::Text newText = createText(foundGames.at(k).getTitle(), 22, sf::Color::White);
-                    newText.setFont(font);
-                    newText.setPosition(230, height);
-                    titleTexts.push_back(newText);
-                    height += 35;
+                if(ascDesc == "ascending") {
+                    for (int k = startIndex; k < foundGames.size(); k++) {
+                        sf::Text newText = createText(foundGames.at(k).getTitle(), 22, sf::Color::White);
+                        newText.setFont(font);
+                        newText.setPosition(230, height);
+                        titleTexts.push_back(newText);
+                        height += 35;
+                    }
+                }
+                else {
+                    for (int k = foundGames.size() - 1; k >= startIndex; k--) {
+                        sf::Text newText = createText(foundGames.at(k).getTitle(), 22, sf::Color::White);
+                        newText.setFont(font);
+                        newText.setPosition(230, height);
+                        titleTexts.push_back(newText);
+                        height += 35;
+                    }
                 }
             }
 
@@ -399,6 +456,9 @@ int main() {
                 window.draw(text);
             }
             for (auto& button : algoButtons) {
+                button.drawButton(window);
+            }
+            for (auto& button : ascendingDescendingButtons) {
                 button.drawButton(window);
             }
             window.draw(sortButton);

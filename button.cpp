@@ -2,7 +2,7 @@
 
 Button::Button(string name, int x, int y) {
     this->name = name;
-    if (name == "price" or name == "quickSort") {
+    if (name == "price" or name == "quickSort" or name == "ascending") {
         active = true;
     }
     else {
