@@ -56,6 +56,7 @@ int main() {
     bool textEntered = false;
     bool displayTitles = false;
     string searchString = "|";
+    int startIndex = 0;
 
     Event event;
 
@@ -240,6 +241,7 @@ int main() {
                         // If user presses enter, search for current string in game titles
                         if (event.key.code == sf::Keyboard::Enter && searchString.size() > 1) {
                             foundGames.clear();
+                            startIndex = 0;
                             string title = searchString.substr(0, searchString.size() - 1);
                             for (auto& letter : title) {
                                 if (isalpha(letter)) {
@@ -266,13 +268,10 @@ int main() {
                     break;
                 case Event::MouseButtonPressed:
                     sf::Mouse mouse;
-                    sf::Vector2i mousePosition = mouse.getPosition(window);
-                    int x = mousePosition.x;
-                    int y = mousePosition.y;
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        //
-                        leftMouseClick(x, y, filterButtons);
-                        leftMouseClick(x, y, algoButtons);
+                        sf::Vector2i mousePosition = mouse.getPosition(window);
+                        leftMouseClick(mousePosition.x, mousePosition.y, filterButtons);
+                        leftMouseClick(mousePosition.x, mousePosition.y, algoButtons);
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
@@ -304,6 +303,15 @@ int main() {
                         }
                     }
                     break;
+                case Event::MouseWheelScrolled:
+                    cout << event.mouseWheelScroll.delta << endl;
+                    if (event.mouseWheelScroll.delta > 0 && startIndex > 0) {
+                        startIndex--;
+                    }
+                    else if (event.mouseWheelScroll.delta < 0) {
+                        startIndex++;
+                    }
+                    break;
             }
 
             // Modify text in search bar
@@ -322,8 +330,8 @@ int main() {
 
             height = 90;
             vector<sf::Text> titleTexts;
-            if (!foundGames.empty()) {
-                for (int j = 0; j < foundGames.size(); j++) {
+            if (!foundGames.empty() && startIndex < foundGames.size()) {
+                for (int j = startIndex; j < foundGames.size(); j++) {
                     sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
                     newText.setFont(font);
                     newText.setPosition(230, height);
