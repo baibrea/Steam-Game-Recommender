@@ -78,3 +78,7 @@ bool Game::getMac() {
 bool Game::getLinux() {
     return linux;
 }
+
+vector<string> Game::getGenres() {
+    return genres;
+}

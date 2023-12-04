@@ -164,7 +164,7 @@ int main() {
     efficiencyText.setFont(font);
     efficiencyText.setOutlineThickness(2);
     efficiencyText.setOutlineColor(Color(24, 68, 84));
-    setTextCenter(efficiencyText, 70, 545);
+    setTextCenter(efficiencyText, 65, 545);
     texts.push_back(efficiencyText);
 
     // Create filterButtons
@@ -244,6 +244,7 @@ int main() {
     string searchString = "|";
     int startIndex = 0;
     string ascDesc = "ascending";
+    chrono::duration<float> timePassed;
 
     Game currGame;
 
@@ -330,7 +331,6 @@ int main() {
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
-//                            foundGames.clear();
                             startIndex = 0;
 
                             string filter;
@@ -365,7 +365,7 @@ int main() {
                                 quickSort(foundGames, 0, foundGames.size() - 1, filter);
                             }
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
-                            chrono::duration<float> timePassed = endTime - startTime;
+                            timePassed = endTime - startTime;
                             cout << "Sorting executed in " << timePassed.count() << " seconds.";
                         }
                         typing = clickedSearchBar(searchBox, mousePosition);
@@ -408,6 +408,15 @@ int main() {
             sf::Text searchInput = createText(searchString, 24, sf::Color::White);
             searchInput.setFont(font);
             searchInput.setPosition(240, 25);
+
+            // Modify efficiency value
+            string time = to_string(timePassed.count());
+            time = time.substr(0, time.length() - 3) + " s";
+            sf::Text efficiencyVal = createText(time, 22, sf::Color::White);
+            efficiencyVal.setFont(font);
+            efficiencyVal.setOutlineThickness(2);
+            efficiencyVal.setOutlineColor(Color(24, 68, 84));
+            efficiencyVal.setPosition(120, 530);
 
             // Create text for game titles (search bar)
             // FIXME: Errors with printing out the sorted titles
@@ -477,6 +486,7 @@ int main() {
             }
             window.draw(sortButton);
             window.draw(sortText);
+            window.draw(efficiencyVal);
 
             // Draw search bar elements
             window.draw(searchBox);
@@ -613,6 +623,21 @@ int main() {
                 playtime.setPosition(435, 288);
                 playtime.setFont(font);
 
+                string genreList = "";
+                vector<string> genresVector = currGame.getGenres();
+                for (auto& genre : genresVector) {
+                    string upperGenre = "";
+                    for (auto& letter : genre) {
+                        upperGenre.push_back(toupper(letter));
+                    }
+                    genreList = genreList + upperGenre + " | ";
+                }
+                genreList = genreList.substr(0, genreList.size() - 2);
+
+                sf::Text genres = createText(genreList, 20, sf::Color(87, 161, 218));
+                genres.setPosition(250, 340);
+                genres.setFont(font);
+
                 // Draw elements
                 window.draw(titleText);
                 window.draw(releaseDateLabel);
@@ -630,7 +655,7 @@ int main() {
                 window.draw(metacriticRating);
                 window.draw(os);
                 window.draw(playtime);
-
+                window.draw(genres);
             }
 
 

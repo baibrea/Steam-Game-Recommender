@@ -37,5 +37,6 @@ public:
     bool getWindows();
     bool getMac();
     bool getLinux();
+    vector<string> getGenres();
 };
 
