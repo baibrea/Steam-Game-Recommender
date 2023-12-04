@@ -1,5 +1,6 @@
 #include "extra.h"
 #include <limits>
+#include <regex>
 
 void parseFile(fstream& file, map<string, Game>& steamGames) {
     // Bypass line that contains column titles
@@ -20,7 +21,13 @@ void parseFile(fstream& file, map<string, Game>& steamGames) {
         bool windows, mac, linux = false;
 
         try {
-            getline(stream, title, ',');
+            getline(stream, temp, ',');
+            for (auto& letter : temp) {
+                if (31 < static_cast<unsigned char>(letter) && static_cast<unsigned char>(letter) < 128) {
+                    title.push_back(letter);
+                }
+            }
+
             getline(stream, releaseDate, ',');
             getline(stream, temp, ',');
             peakCCU = stoi(temp);
