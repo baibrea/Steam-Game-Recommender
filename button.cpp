@@ -45,3 +45,7 @@ sf::FloatRect Button::getBounds() {
 bool Button::isActive() {
     return active;
 }
+
+string Button::getName() {
+    return name;
+}

@@ -55,6 +55,7 @@ int main() {
 
     bool textEntered = false;
     bool displayTitles = false;
+    bool sorted = false;
     string searchString = "|";
     int startIndex = 0;
 
@@ -238,17 +239,17 @@ int main() {
                             searchString.pop_back();
                             searchString.push_back('|');
                         }
-                        // If user presses enter, search for current string in game titles
+                        // If user presses "Enter," search for current string in game titles
                         if (event.key.code == sf::Keyboard::Enter && searchString.size() > 1) {
                             foundGames.clear();
                             startIndex = 0;
+                            sorted = false;
                             string title = searchString.substr(0, searchString.size() - 1);
                             for (auto& letter : title) {
                                 if (isalpha(letter)) {
                                     letter = tolower(letter);
                                 }
                             }
-
                             for (map<string, Game>::iterator itr = steamGames.begin(); itr != steamGames.end(); itr++) {
                                 string currTitle = itr->first;
                                 for (auto& letter : currTitle) {
@@ -275,10 +276,33 @@ int main() {
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
+                            foundGames.clear();
+                            startIndex = 0;
+
+                            string filter;
+                            for (auto& button : filterButtons) {
+                                if (button.isActive()) {
+                                    filter = button.getName();
+                                }
+                            }
+                            string algorithm;
+                            for (auto& button: algoButtons) {
+                                if (button.isActive()) {
+                                    algorithm = button.getName();
+                                }
+                            }
 
                             chrono::time_point<chrono::high_resolution_clock> startTime = chrono::high_resolution_clock::now();
+
+                            sorted = true;
                             // TODO: Sort by selected filters
-                            // quickSort(arr, 0, arr.size()-1, "rating");
+                            if (algorithm == "mergeSort") {
+                                mergeSort(arr, 0, arr.size() - 1, filter);
+                            }
+                            else {
+                                quickSort(arr, 0, arr.size() - 1, filter);
+                            }
+
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
                             chrono::duration<float> timePassed = endTime - startTime;
                             cout << "Sorting executed in " << timePassed.count() << " seconds.";
@@ -328,11 +352,26 @@ int main() {
                 height += 35;
             }
 
+            // Create text for game titles (search bar)
+            // FIXME: Errors with printing out the sorted titles
             height = 90;
             vector<sf::Text> titleTexts;
             if (!foundGames.empty() && startIndex < foundGames.size()) {
                 for (int j = startIndex; j < foundGames.size(); j++) {
                     sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
+                    newText.setFont(font);
+                    newText.setPosition(230, height);
+                    titleTexts.push_back(newText);
+                    height += 35;
+                }
+            }
+
+            // Create text for game titles (sorting algorithms)
+            height = 90;
+            if (sorted) {
+                titleTexts.clear();
+                for (int k = startIndex; k < arr.size(); k++) {
+                    sf::Text newText = createText(arr.at(k).getTitle(), 22, sf::Color::White);
                     newText.setFont(font);
                     newText.setPosition(230, height);
                     titleTexts.push_back(newText);
