@@ -288,6 +288,7 @@ int main() {
                                 cout << selectedGame.getTitle();
                             }
                         }
+
                         if (sortButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                             sortButton.setFillColor(sf::Color(96, 96, 96));
                             sortText.setFillColor(sf::Color(192, 192, 192));
