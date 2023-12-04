@@ -38,3 +38,14 @@ bool clickedSearchBar(sf::RectangleShape bounds, sf::Vector2i mousePosition) {
     else
         return false;
 }
+
+sf::RectangleShape createTitleBox(int y) {
+    sf::RectangleShape titleBox(sf::Vector2f(750, 34));
+    titleBox.setFillColor(sf::Color(37, 78, 110));
+    sf::FloatRect bounds = titleBox.getLocalBounds();
+    titleBox.setOrigin(bounds.left + bounds.width/2.0f, bounds.top + bounds.height/2.0f);
+    titleBox.setPosition(600, y);
+    titleBox.setOutlineThickness(0.5);
+    titleBox.setOutlineColor(sf::Color::White);
+    return titleBox;
+}

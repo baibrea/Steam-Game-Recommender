@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "button.h"
+#include "game.h"
 #pragma once
 using namespace std;
 
@@ -12,3 +13,4 @@ void leftMouseClick(int x, int y, vector<Button>& buttons);
 
 bool clickedSearchBar(sf::RectangleShape bounds, sf::Vector2i mousePosition);
 
+sf::RectangleShape createTitleBox(int y);

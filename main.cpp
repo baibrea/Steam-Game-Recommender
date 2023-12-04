@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <map>
+#include <algorithm>
 #include "extra.h"
 #include "game.h"
 #include "sfml.h"
@@ -14,6 +15,7 @@ using namespace sf;
 int main() {
     // Create containers (Game objects, filterButtons)
     map<string, Game> steamGames;
+    vector<Game> foundGames;
 
     // Parse database and create new Game objects
     fstream file("games.csv", ios_base::in);
@@ -52,6 +54,7 @@ int main() {
     vector<sf::Text> texts;
 
     bool textEntered = false;
+    bool displayTitles = false;
     string searchString = "|";
 
     Event event;
@@ -134,6 +137,13 @@ int main() {
     setTextCenter(mergeSortText, 125, 400);
     texts.push_back(mergeSortText);
 
+    sf::Text efficiencyText = createText("Efficiency:", 22, sf::Color::White);
+    efficiencyText.setFont(font);
+    efficiencyText.setOutlineThickness(2);
+    efficiencyText.setOutlineColor(Color(24, 68, 84));
+    setTextCenter(efficiencyText, 70, 525);
+    texts.push_back(efficiencyText);
+
     // Create filterButtons
     vector<Button> filterButtons{};
     Button priceButton("price", 50, 190);
@@ -160,7 +170,7 @@ int main() {
 
     sf::Text sortText = createText("SORT", 22, sf::Color::White);
     sortText.setOutlineThickness(1.5);
-    sortText.setOutlineColor(sf::Color::Black);
+    sortText.setOutlineColor(sf::Color(64, 64, 64));
     sortText.setFont(font);
     sortText.setStyle(sf::Text::Bold);
     setTextCenter(sortText, 100, 460);
@@ -199,7 +209,6 @@ int main() {
 
         // Handles User Interaction with Window
         char input;
-        Vector2i mousePosition;
 
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -223,13 +232,35 @@ int main() {
                 case Event::KeyPressed:
                     // If user presses backspace, delete the last character in the search bar
                     if (typing) {
-                        if (event.key.code == sf::Keyboard::Backspace and searchString.size() > 1) {
+                        if (event.key.code == sf::Keyboard::Backspace && searchString.size() > 1) {
                             searchString.pop_back();
                             searchString.pop_back();
                             searchString.push_back('|');
                         }
+                        // If user presses enter, search for current string in game titles
+                        if (event.key.code == sf::Keyboard::Enter && searchString.size() > 1) {
+                            foundGames.clear();
+                            string title = searchString.substr(0, searchString.size() - 1);
+                            for (auto& letter : title) {
+                                if (isalpha(letter)) {
+                                    letter = tolower(letter);
+                                }
+                            }
+
+                            for (map<string, Game>::iterator itr = steamGames.begin(); itr != steamGames.end(); itr++) {
+                                string currTitle = itr->first;
+                                for (auto& letter : currTitle) {
+                                    if (isalpha(letter)) {
+                                        letter = tolower(letter);
+                                    }
+                                }
+                                if (currTitle.find(title) != std::string::npos) {
+                                    foundGames.push_back(itr->second);
+                                }
+                            }
+                            cout << foundGames.size();
+                        }
                     }
-                    // TODO: If user presses enter, search for current string in game titles (ignore case sensitivity)
 
                     // Placeholder Text
                     break;
@@ -263,7 +294,9 @@ int main() {
                         if (!typing) {
                             if (searchString.size() > 1 && searchString != "search") {
                                 cout << searchString << endl;
-                                searchString.pop_back();
+                                if (searchString.at(searchString.size() - 1) == '|') {
+                                    searchString.pop_back();
+                                }
                             }
                             else {
                                 textEntered = false;
@@ -273,24 +306,44 @@ int main() {
                     break;
             }
 
+            // Modify text in search bar
             sf::Text searchInput = createText(searchString, 24, sf::Color::White);
             searchInput.setFont(font);
             searchInput.setPosition(240, 25);
+
+            // Create boxes to display game titles
+            vector<sf::RectangleShape> titleBoxes;
+            int height = 102;
+            for (int i = 0; i < 14; i++) {
+                sf::RectangleShape newBox = createTitleBox(height);
+                titleBoxes.push_back(newBox);
+                height += 35;
+            }
+
+            height = 90;
+            vector<sf::Text> titleTexts;
+            if (!foundGames.empty()) {
+                for (int j = 0; j < foundGames.size(); j++) {
+                    sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
+                    newText.setFont(font);
+                    newText.setPosition(230, height);
+                    titleTexts.push_back(newText);
+                    height += 35;
+                }
+            }
 
             // Draw elements and display window
             window.clear(Color(26, 42, 61, 0));
             window.draw(sideBar);
 
-            for (int i = 0; i < filterButtons.size(); i++) {
-                filterButtons.at(i).drawButton(window);
+            for (auto& button : filterButtons) {
+                button.drawButton(window);
             }
-
-            for (int j = 0; j < texts.size(); j++) {
-                window.draw(texts.at(j));
+            for (auto& text : texts) {
+                window.draw(text);
             }
-
-            for (int k = 0; k < algoButtons.size(); k++) {
-                algoButtons.at(k).drawButton(window);
+            for (auto& button : algoButtons) {
+                button.drawButton(window);
             }
             window.draw(sortButton);
             window.draw(sortText);
@@ -302,6 +355,22 @@ int main() {
                 window.draw(searchInput);
             }
             window.draw(gameBox);
+            for (auto& box : titleBoxes) {
+                window.draw(box);
+            }
+            if (titleTexts.size() > 0) {
+                if (titleTexts.size() >= 14) {
+                    for (int i = 0; i < 14; i++) {
+                        window.draw(titleTexts.at(i));
+                    }
+                }
+                else {
+                    for (auto &title: titleTexts) {
+                        window.draw(title);
+                    }
+                }
+            }
+
             window.display();
         }
     }
