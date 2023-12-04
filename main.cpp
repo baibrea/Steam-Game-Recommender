@@ -424,7 +424,7 @@ int main() {
                     }
                 }
                 else {
-                    for (int j = foundGames.size() - 1; j >= startIndex; j--) {
+                    for (int j = foundGames.size() - 1 - startIndex; j >= startIndex; j--) {
                         sf::Text newText = createText(foundGames.at(j).getTitle(), 22, sf::Color::White);
                         newText.setFont(font);
                         newText.setPosition(230, height);
@@ -448,7 +448,7 @@ int main() {
                     }
                 }
                 else {
-                    for (int k = foundGames.size() - 1; k >= startIndex; k--) {
+                    for (int k = foundGames.size() - 1 - startIndex; k >= startIndex; k--) {
                         sf::Text newText = createText(foundGames.at(k).getTitle(), 22, sf::Color::White);
                         newText.setFont(font);
                         newText.setPosition(230, height);
@@ -564,19 +564,20 @@ int main() {
                 releaseDate.setPosition(395, 138);
                 releaseDate.setFont(font);
 
-                string priceVal = "$" + to_string(floor(currGame.getPrice()));
-                sf::Text price = createText(priceVal, 20, sf::Color(53, 155, 233));
+                string priceVal = "$" + to_string(currGame.getPrice());
+                sf::Text price = createText(priceVal.substr(0, priceVal.length() - 4), 20, sf::Color(53, 155, 233));
                 price.setStyle(sf::Text::Bold);
                 price.setPosition(315, 168);
                 price.setFont(font);
 
                 float ratingVal = currGame.getRatingValue() * 100;
-                sf::Text rating = createText(to_string(floor(ratingVal)) , 20, sf::Color(53, 155, 233));
+                string ratingString = to_string(ratingVal);
+                sf::Text rating = createText(ratingString.substr(0, ratingString.length() - 4), 20, sf::Color(53, 155, 233));
                 rating.setStyle(sf::Text::Bold);
                 rating.setPosition(380, 198);
                 rating.setFont(font);
 
-                sf::Text metacriticRating = createText(to_string(floor(currGame.getMetacritic())) , 20, sf::Color(53, 155, 233));
+                sf::Text metacriticRating = createText(to_string(currGame.getMetacritic()), 20, sf::Color(53, 155, 233));
                 metacriticRating.setStyle(sf::Text::Bold);
                 metacriticRating.setPosition(440, 228);
                 metacriticRating.setFont(font);
