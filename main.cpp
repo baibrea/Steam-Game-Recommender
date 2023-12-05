@@ -61,6 +61,10 @@ int main() {
     Texture backButtonTexture;
     Sprite backButtonSprite;
 
+    // Objects for Steam Logo
+    Texture steamTexture;
+    Sprite steamSprite;
+
     // Sets up side bar
     sf::RectangleShape sideBar(sf::Vector2f(200, 600));
     sideBar.setFillColor(sf::Color(52, 109, 157));
@@ -534,11 +538,18 @@ int main() {
                 titleText.setFont(font);
                 setTextCenter(titleText, 600, 110);
 
+                // Creates the back arrow
                 backButtonTexture.loadFromFile("../files/images/backbutton.png");
                 backButtonSprite.setTexture(backButtonTexture);
                 // FIXME: Maybe tweak the position.
                 backButtonSprite.setPosition(220, 80);
                 window.draw(backButtonSprite);
+
+                // Creates Steam Logo
+                steamTexture.loadFromFile("../files/images/steamlogo.png");
+                steamSprite.setTexture(steamTexture);
+                steamSprite.setPosition(220, 150);
+                window.draw(steamSprite);
 
                 // Create labels for stats
                 sf::Text releaseDateLabel = createText("RELEASE DATE:", 18, sf::Color(121, 136, 161));
