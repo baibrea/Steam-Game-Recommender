@@ -323,7 +323,12 @@ int main() {
                             titleNum = leftMouseClickTitle(mousePosition.x, mousePosition.y, titleBoxes);
                             if (foundGames.size() > (startIndex + titleNum)) {
                                 gameOpen = true;
-                                currGame = foundGames.at(startIndex + titleNum);
+                                if(ascDesc == "ascending") {
+                                    currGame = foundGames.at(startIndex + titleNum);
+                                }
+                                else {
+                                    currGame = foundGames.at(foundGames.size() - 1 - titleNum);
+                                }
                                 cout << currGame.getTitle() << endl;
                             }
                         }
