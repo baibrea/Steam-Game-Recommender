@@ -31,19 +31,6 @@ int main() {
         allGames.push_back(game.second);
     }
 
-////     Running QuickSort
-//    quickSort(allGames, 0, allGames.size()-1, "price");
-//    for(int i = 0; i < allGames.size(); i++) {
-//        cout << "Game: " << allGames.at(i).getTitle() << " Price: " << allGames.at(i).getPrice() << endl;
-//    }
-
-////  Running MergeSort
-//    mergeSort(allGames, 0, allGames.size()-1, "rating");
-//    for(int i = 0; i < allGames.size()-1; i++) {
-//        cout << "Game: " << allGames.at(i).getTitle() << " Rating: " << allGames.at(i).getRatingValue() << endl;
-//    }
-
-
     // Code for UI
     // Create window
     RenderWindow window(VideoMode(1000, 600), "Steam Game Recommender", sf::Style::Close);
@@ -312,7 +299,7 @@ int main() {
                                     foundGames.push_back(itr->second);
                                 }
                             }
-                            cout << foundGames.size();
+//                            cout << foundGames.size();
                         }
                     }
                     break;
@@ -334,7 +321,7 @@ int main() {
                                 else {
                                     currGame = foundGames.at(foundGames.size() - 1 - startIndex - titleNum);
                                 }
-                                cout << currGame.getTitle() << endl;
+//                                cout << currGame.getTitle() << endl;
                             }
                         }
 
@@ -376,7 +363,7 @@ int main() {
                             }
                             chrono::time_point<chrono::high_resolution_clock> endTime = chrono::high_resolution_clock::now();
                             timePassed = endTime - startTime;
-                            cout << "Sorting executed in " << timePassed.count() << " seconds.";
+//                            cout << "Sorting executed in " << timePassed.count() << " seconds.";
                         }
                         typing = clickedSearchBar(searchBox, mousePosition);
                         if (typing) {
@@ -404,7 +391,7 @@ int main() {
                     }
                     break;
                 case Event::MouseWheelScrolled:
-                    cout << event.mouseWheelScroll.delta << endl;
+//                    cout << event.mouseWheelScroll.delta << endl;
                     if (event.mouseWheelScroll.delta > 0 && startIndex > 0) {
                         startIndex--;
                     }
