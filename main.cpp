@@ -332,7 +332,7 @@ int main() {
                                     currGame = foundGames.at(startIndex + titleNum);
                                 }
                                 else {
-                                    currGame = foundGames.at(foundGames.size() - 1 - titleNum);
+                                    currGame = foundGames.at(foundGames.size() - 1 - startIndex - titleNum);
                                 }
                                 cout << currGame.getTitle() << endl;
                             }
